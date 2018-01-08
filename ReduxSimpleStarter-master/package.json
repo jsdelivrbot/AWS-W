@@ -39,7 +39,7 @@
     "react-bootstrap-time-picker": "^1.0.3",
     "react-dom": "^0.14.3",
     "react-dropdown-timepicker": "^1.0.4",
-    "react-form": "^2.15.0",
+    "react-form": "^2.15.2",
     "react-redux": "4.3.0",
     "react-responsive-tabs": "^2.0.0",
     "react-router": "^2.0.1",
