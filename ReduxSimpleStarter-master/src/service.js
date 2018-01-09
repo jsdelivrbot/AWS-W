@@ -7,25 +7,21 @@ app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 
-var user = {
-    "user4" : {
-        "name" : "mohit",
-        "password" : "password4",
-        "profession" : "teacher",
-        "id": 4
-    }
-}
-
 app.post('/api/saveNewFeed', function (req, res) {
     console.log('post call',req.body)
 
-    res.send(JSON.stringify(req.body));
+    res.send(req.body);
 });
 
 app.get('/api/getNewFeed',function(req,res){
 
-    res.send({"message":"Hello"});
+    fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
+        console.log( data );
+        res.end( data );
+        res.send("Hello get service");
+    });
 })
+
 
 var server = app.listen(8081, function () {
 
