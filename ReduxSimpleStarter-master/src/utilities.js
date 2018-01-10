@@ -1,27 +1,27 @@
-console.log("Hello ConfigureNewFeed");
 var fs = require("fs");
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-//Created by Vinod Declaration starts
-//var utilities = require('./utilities');
 var AWS = require('aws-sdk');
 AWS.config.update({region: 'ap-south-1'});
-//Declaration ends
 
-app.post('/api/saveNewFeed', function (req, res) {
-    console.log('post call',(JSON.stringify(req.body)))
+function savefeed1() {
+	console.log("test");
+}
 
-    res.send(JSON.stringify(req.body));
+function savefeed(inputresp) {
 
-//Vinod - JSON processing
-//statusmsg = utilities.savefeed((JSON.stringify(req.body)));
-//console.log(statusmsg);
+console.log("\n *STARTING savefeed* \n");
+
 // Define to JSON type
-var jsonContent = JSON.parse((JSON.stringify(req.body)));
+var jsonContent = JSON.parse(inputresp);
+
+// Get Value from JSON
+console.log("Feed Name:", jsonContent.feedName);
+console.log("Feed Format:", jsonContent.feedFormat);
+console.log("Feed Type:", jsonContent.feedType);
 
 // Create the DynamoDB service object
 ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'});
@@ -35,9 +35,9 @@ var params = {
 	'feedSubject' : {S: jsonContent.feedSubject},
 	'feedTarget' : {S: jsonContent.feedTarget},
 	'feedFrequency' : {S: jsonContent.feedFrequency},
-	'feedWeekday' : {S: 'NA'},
-	'feedWeekend' : {S: 'NA'},
-	'feedUsHoliday' : {S: 'NA'},
+	'feedWeekday' : {S: jsonContent.feedWeekday},
+	'feedWeekend' : {S: jsonContent.feedWeekend},
+	'feedUsHoliday' : {S: jsonContent.feedUsHoliday},
 	'vendorSrcDataPoint' : {S: jsonContent.vendorSrcDataPoint},
 	'resourcePath' : {S: jsonContent.resourcePath},
 	'filePattern' : {S: jsonContent.filePattern},
@@ -66,24 +66,5 @@ ddb.putItem(params, function(err, data) {
 	return "Error while processing...quitting.";
   }
 });
-//Vinod - End of code for JSON processing
+}
 
-});
-
-app.get('/api/getNewFeed',function(req,res){
-
-    fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
-        console.log( data );
-       // res.end( data );
-        res.send(JSON.stringify(data));
-    });
-})
-
-
-var server = app.listen(8081, function () {
-
-    var host = server.address().address
-    var port = server.address().port
-    console.log("Example app listening at http://%s:%s", host, port);
-
-})
