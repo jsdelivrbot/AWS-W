@@ -16,33 +16,33 @@ export default class ConfigureNewFeed extends Component {
                 required: " *",
                 failureToleranceRangeError : " Range in between 1 to 100"
             },
-            "feedDetails": {
-                "feedId" : "",
-                "feedName": "",
-                "feedSubject" : "",
-                "feedTarget" : "",
-                "feedFrequency" : "",
-                "feedWeekday": "",
-                "feedWeekend" : "",
-                "feedUsHoliday" : "",
-                "vendorSrcDataPoint" : "",
-                "resourcePath": "",
-                "filePattern" : "",
-                "fileFormat" : "",
-                "noOfFiles" : "",
-                "failureTolerance" : "",
-                "retentionPeriod" : "",
-                "tokenFile" : "No",
-                "loadingMode" : "",
-                "extTablePush" : "No",
-                "tableNameCredentials": "",
-                "compression" : "No",
-                "encryption" : "No",
-                "feedNotificationSubscription" : "",
-                "dataControl" : ""
+            feedDetails: {
+                feedId : "",
+                feedName: "",
+                feedSubject : "",
+                feedTarget : "",
+                feedFrequency : "",
+                feedWeekday: "",
+                feedWeekend : "",
+                feedUsHoliday : "",
+                vendorSrcDataPoint : "",
+                resourcePath : "",
+                filePattern : "",
+                fileFormat : "",
+                noOfFiles : "",
+                failureTolerance : "",
+                retentionPeriod : "",
+                tokenFile : "No",
+                loadingMode : "",
+                extTablePush : "No",
+                tableNameCredentials: "",
+                compression : "No",
+                encryption : "No",
+                feedNotificationSubscription : "",
+                dataControl : ""
 
     }
-}
+};
 
 this.updateState = this.updateState.bind(this);
 this.saveFeedDetails = this.saveFeedDetails.bind(this);
@@ -87,7 +87,9 @@ formValid() {
     saveFeedDetails = (event) => {
         this.setState({formDirty: true});
         if (this.formValid()) {
-            const request = axios.post("/api/saveNewFeed",JSON.stringify(this.state.feedDetails));
+            console.log("Makingrequest",this.state.feedDetails);
+            console.log("Requeststringfy",this.state.feedDetails);
+            const request = axios.post("/api/saveNewFeed",this.state.feedDetails);
             request.then(res => {
                 console.log(res);
 

@@ -17,8 +17,8 @@ app.get('/api/getNewFeed',function(req,res){
 
     fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
         console.log( data );
-        res.end( data );
-        res.send("Hello get service");
+       // res.end( data );
+        res.send(JSON.stringify(data));
     });
 })
 
