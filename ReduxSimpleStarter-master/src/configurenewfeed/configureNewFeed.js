@@ -87,6 +87,7 @@ formValid() {
     saveFeedDetails = (event) => {
         this.setState({formDirty: true});
         if (this.formValid()) {
+	    alert("Feed Saved Successfully");
             console.log("Makingrequest",this.state.feedDetails);
             console.log("Requeststringfy",this.state.feedDetails);
             const request = axios.post("/api/saveNewFeed",this.state.feedDetails);
