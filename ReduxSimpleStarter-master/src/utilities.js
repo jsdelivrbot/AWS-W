@@ -66,34 +66,37 @@ module.exports = {
  
  getFeedDts: function(inputFeedId) {
 	// Define Dynamo DB
-	var AWS = require('aws-sdk');
+	var AWS = require("aws-sdk");
 	AWS.config.update({region: 'ap-south-1'});
 
 	console.log("\n *STARTING* \n");
+	
+	var getDetails = new AWS.DynamoDB.DocumentClient()
 
-	// Create the DynamoDB service object
-	ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'});
+	var table = "feed_master";
+
+	var feedid = inputFeedId;
+	//var title = "The Big New Movie";
 
 	var params = {
-	  TableName: 'feed_master',
-	  Key: {
-		'feedId' : {S: inputFeedId},
-	  }
+		TableName: table,
+		Key:{
+			"feedId": feedid
+		}
 	};
 
-	// Call DynamoDB to read the item from the table
-	ddb.getItem(params, function(err, data) {
-	  if (err) {
-		console.log("Error", err);
-		return err;
-	  } else {
-		console.log("Success", data.Item);
-		return data.Item;
-	  }
+	getDetails.get(params, function(err, data) {
+		if (err) {
+			console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+			return (JSON.stringify(err, null, 2));
+		} else {
+			console.log("getFeedDts succeeded:", JSON.stringify(data, null, 2));
+			return (JSON.stringify(data, null, 2));
+		}
 	});
 
 
-	console.log("\n *EXIT* \n");
 
+	console.log("\n *EXIT* \n");
 }
 }
