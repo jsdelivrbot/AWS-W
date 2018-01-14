@@ -22,7 +22,7 @@
 
 .boxBorder
 {
-    border: 2px solid blue;
+    border: 2px solid blue !important;
 }
 
 .m-5top
@@ -95,5 +95,10 @@
 {
     display: inline;
     border: 2px solid blue;
-    padding: 0px 204px;
+    padding: 0px 203px;
+}
+
+.w-200
+{
+    width: 200px !important;
 }

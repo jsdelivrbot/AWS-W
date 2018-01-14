@@ -10,7 +10,6 @@ export default class ModifyExistingFeed extends Component {
             allFeeds:[],
             filteredFeeds:[]
         };
-        //  this.getExsistingFeed();
         this.filterFeeds = this.filterFeeds.bind(this);
         this.updateState = this.updateState.bind(this);
         this.editFeed = this.editFeed.bind(this);
@@ -19,16 +18,11 @@ export default class ModifyExistingFeed extends Component {
     filterFeeds()
     {
 
-        //console.log(this.state);
+
         const feedName = this.state.feedName;
-        console.log("SavedFeedName",feedName);
+
         this.searchFeed(feedName);
-        console.log("Inside filtered feeds state ",this.state);
-        /*let feeds = this.state.allFeeds.filter(function(feed){
 
-           return feed.feedName.indexOf(feedName)>-1;
-
-    });*/
     }
     searchFeed(feedName)
     {
@@ -44,7 +38,6 @@ export default class ModifyExistingFeed extends Component {
     updateState(e) {
 
         this.setState({[e.target.name]: e.target.value});
-        console.log("modifyex", this.state);
 
     }
 
@@ -57,7 +50,7 @@ export default class ModifyExistingFeed extends Component {
         const {} = this.props;
         let filteredRows = this.state.filteredFeeds.map((feed,index)=>{
             return <div className="feedForm colorFileDetails m-5top m-15right m-15left">
-                <Row className="m-5top">
+                <Row>
                     <Col sm={2}>
                         <label className="indexColor fontweightClass">{index+1}</label>
                     </Col>
@@ -90,7 +83,7 @@ export default class ModifyExistingFeed extends Component {
 
                                 </Col>
                                 <Col sm={2}>
-                                    <label className="fontweightClass">Asset Class:</label>
+                                    <label className="fontweightClass">File Format:</label>
                                 </Col>
                                 <Col sm={3}>
                                     <input className="boxBorder" name="assetClass" value="" type="text"/>

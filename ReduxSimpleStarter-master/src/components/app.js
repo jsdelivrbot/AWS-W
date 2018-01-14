@@ -42,13 +42,13 @@ export default class App extends Component {
                         <Col sm={12}>
                             <Nav pills>
 
-                                <NavItem className='test' eventKey="first" onClick={this.selectTab.bind(this,"first")}>
-                                    Configure New Feed
+                                <NavItem className="test" eventKey="first" onClick={this.selectTab.bind(this,"first")}>
+                                    <span className={this.state.selectedTab == "first" ? ' colorFileDetails indexColor':''}>  Configure New Feed</span>
                                 </NavItem>
 
 
-                                <NavItem className='test' eventKey="second" onClick={this.selectTab.bind(this,"second")}>
-                                    ModifyExistingFeed
+                                <NavItem className="test" eventKey="second" onClick={this.selectTab.bind(this,"second")}>
+                                    <span className={this.state.selectedTab == "second" ? ' colorFileDetails indexColor':''}>   ModifyExistingFeed </span>
                                 </NavItem>
 
                             </Nav>

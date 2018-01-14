@@ -20,18 +20,22 @@ var feedstatus = utilities.savefeed(JSON.stringify(req.body));
 app.get('/api/searchFeed',function(req,res){
 
     fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
-
         let feedName = req.query.feedName;
         let fileFormat = req.query.fileFormat;
 
+        // all lines to be deleted from here
         let allFeeds = JSON.parse(data);
 
         let filterFeeds = allFeeds.feeds.filter(function(feed){
                     console.log("Full result",feed.fileFormat);
+
+
             return feed.feedName.indexOf(feedName)>-1;
 
-        });
 
+        });
+        // till here
+      //  let filterFeeds = utilities.searchFeeddetails(feedName);
         res.send(JSON.stringify(filterFeeds));
     });
 })
@@ -49,14 +53,14 @@ app.get('/api/getFeed',function(req,res){
             return feed.feedId == feedId;
 
         });
-
+        //let filterFeed = utilities.getFeedDts(feedId);
+        //res.send(JSON.stringify(filterFeed.item));
         res.send(JSON.stringify(filterFeeds && filterFeeds[0]));
     });
 })
 
 
-var server = app.listen(8081, function () {
-
+    var server = app.listen(8081, function () {
     var host = server.address().address
     var port = server.address().port
     console.log("Example app listening at http://%s:%s", host, port);

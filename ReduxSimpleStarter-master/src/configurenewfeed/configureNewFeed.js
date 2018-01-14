@@ -3,8 +3,7 @@ import {Tab, Row, Col, Nav, NavItem} from 'react-bootstrap';
 import axios from 'axios';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
-import TimePicker from 'react-dropdown-timepicker';
-import TimePickerComponent from './timePickerComponent';
+import TimePicker from 'react-bootstrap-time-picker';
 
 export default class ConfigureNewFeed extends Component {
     constructor(props) {
@@ -23,9 +22,9 @@ export default class ConfigureNewFeed extends Component {
                 feedSubject : "",
                 feedTarget : "",
                 feedFrequency : "",
-                feedWeekday: "12:00PM",
-                feedWeekend : "12:00PM",
-                feedUsHoliday : "12:00PM",
+                feedWeekday: "12:00 PM",
+                feedWeekend : "12:00 PM",
+                feedUsHoliday : "12:00 PM",
                 vendorSrcDataPoint : "",
                 resourcePath : "",
                 filePattern : "",
@@ -42,35 +41,31 @@ export default class ConfigureNewFeed extends Component {
                 feedNotificationSubscription : "",
                 dataControl : ""
 
+            }
+        };
+
+        this.updateState = this.updateState.bind(this);
+        this.saveFeedDetails = this.saveFeedDetails.bind(this);
+        this.getFeed = this.getFeed.bind(this);
     }
-};
 
-this.updateState = this.updateState.bind(this);
-this.saveFeedDetails = this.saveFeedDetails.bind(this);
-this.getFeed = this.getFeed.bind(this);
-}
-
-init(){
-    console.log("tuuuuu",this.props.selectedFeedId);
-}
-
-formValid() {
-    return this.state.feedDetails.feedId.toString().trim().length
-        && this.state.feedDetails.feedName.toString().trim().length
-        && this.state.feedDetails.feedSubject.toString().trim().length
-        && this.state.feedDetails.feedTarget.toString().trim().length
-        && this.state.feedDetails.vendorSrcDataPoint.toString().trim().length
-        && this.state.feedDetails.resourcePath.toString().trim().length
-        && this.state.feedDetails.filePattern.toString().trim().length
-        && this.state.feedDetails.feedFrequency.toString().trim().length
-        && this.state.feedDetails.fileFormat.toString().trim().length
-        && this.state.feedDetails.noOfFiles.toString().trim().length
-        && this.state.feedDetails.failureTolerance.toString().trim().length
-        && this.state.feedDetails.retentionPeriod.toString().trim().length
-        && this.state.feedDetails.loadingMode.toString().trim().length
-        && this.state.feedDetails.tableNameCredentials.toString().trim().length
-        && this.state.feedDetails.feedNotificationSubscription.toString().trim().length
-        && this.state.feedDetails.dataControl.toString().trim().length
+    formValid() {
+        return this.state.feedDetails.feedId.toString().trim().length
+            && this.state.feedDetails.feedName.toString().trim().length
+            && this.state.feedDetails.feedSubject.toString().trim().length
+            && this.state.feedDetails.feedTarget.toString().trim().length
+            && this.state.feedDetails.vendorSrcDataPoint.toString().trim().length
+            && this.state.feedDetails.resourcePath.toString().trim().length
+            && this.state.feedDetails.filePattern.toString().trim().length
+            && this.state.feedDetails.feedFrequency.toString().trim().length
+            && this.state.feedDetails.fileFormat.toString().trim().length
+            && this.state.feedDetails.noOfFiles.toString().trim().length
+            && this.state.feedDetails.failureTolerance.toString().trim().length
+            && this.state.feedDetails.retentionPeriod.toString().trim().length
+            && this.state.feedDetails.loadingMode.toString().trim().length
+            && this.state.feedDetails.tableNameCredentials.toString().trim().length
+            && this.state.feedDetails.feedNotificationSubscription.toString().trim().length
+            && this.state.feedDetails.dataControl.toString().trim().length
     }
 
     checkFieldValidation(name){
@@ -106,13 +101,9 @@ formValid() {
     {
         const request = axios.get('/api/getFeed?feedId='+feedId);
         request.then(res => {
-            let feedWeekdayTime = res.data.feedWeekday;
-            let timeArray = feedWeekdayTime.split(':');
             let data = Object.assign(({},res.data));
-            //data.feedWeekday = {hour:Number(timeArray[0]),minute:Number(timeArray[1].substr(0,2))};
             this.setState({feedDetails:data});
-            console.log(res.data);
-            //this.setState({feedWeekdayTime:{hour:4,minute:0}});
+            this.setState({feedWeekdayTime:this.formatTimeObject(data.feedWeekday)});
 
         })
 
@@ -140,21 +131,14 @@ formValid() {
 
     componentDidUpdate(prevProps){
 
-       if(prevProps.selectedFeedId!=this.props.selectedFeedId && this.props.selectedFeedId){
+        if(prevProps.selectedFeedId!=this.props.selectedFeedId && this.props.selectedFeedId){
 
-           this.getFeed(this.props.selectedFeedId);
-       }
+            this.getFeed(this.props.selectedFeedId);
+        }
     }
 
-    /*shouldComponentUpdate(newProps,newState)
-    {
-        console.log("Gagan holani",newState);
-    }*/
     feedWeekdayChange(time) {
         this.setState(Object.assign(this.state.feedDetails, {feedWeekday: this.formatTime(time)}));
-        //this.setState({feedWeekdayTime:{hour:4,minute:0}});
-        //this.setState({feedWeekday: time});
-        //console.log('ZZZ',time);
     }
 
     feedWeekendChange(time) {
@@ -169,11 +153,13 @@ formValid() {
 
 
     formatTime(time) {
-        const amorpm = time.hour < 12 ? 'AM' : 'PM';
-        const minute = time.minute < 10 ? '0' + time.minute.toString() : time.minute.toString();
-        return time.hour.toString() + ':' + minute + amorpm;
-    }
+        const hour = parseInt(time/3600);
 
+        const amorpm = hour < 12 ? ' AM' : ' PM';
+        const minute = parseInt((time%3600)/60);
+        const formattedMinute = minute < 10 ? '0' + minute.toString() : minute.toString();
+        return hour.toString() + ':' + formattedMinute + amorpm;
+    }
     updateState(e) {
 
         this.setState(Object.assign(this.state.feedDetails, {[e.target.name]: e.target.value}));
@@ -191,10 +177,10 @@ formValid() {
                     <div className="feedForm">
 
                         <Row className ="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Feed ID:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input className={"boxBorder"+(this.checkFieldValidation('feedId') ? " error" : "") } name="feedId" value={this.state.feedDetails.feedId}
                                        onChange={this.updateState} type="number"/>
                                 <span className='errorText'>{this.checkFieldValidation('feedId')}</span>
@@ -211,10 +197,10 @@ formValid() {
                         </Row>
 
                         <Row className ="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Feed Subject:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input className={"boxBorder"+(this.checkFieldValidation('feedSubject') ? " error" : "") } name="feedSubject"
                                        value={this.state.feedDetails.feedSubject} onChange={this.updateState}
                                        type="text"/>
@@ -231,30 +217,28 @@ formValid() {
                             </Col>
                         </Row>
                         <Row className ="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Feed Weekday SLA:</label>
                             </Col>
-                            <Col sm={4}>
-                                <TimePickerComponent name="feedWeekday"
-                                            time={this.state.feedDetails.feedWeekday} onChange={this.feedWeekdayChange.bind(this)}/>
-
+                            <Col sm={3}>
+                                <TimePicker className="boxBorder w-200" name="feedWeekday" onChange={this.feedWeekdayChange.bind(this)} value={this.state.feedDetails.feedWeekday}/>
                             </Col>
                             <Col sm={3}>
                                 <label className="fontweightClass">Feed Weekend SLA</label>
                             </Col>
                             <Col sm={3}>
-                                <TimePicker displayFormat="12-hour" name="feedWeekend" className='boxBorder'
-                                            time={this.state.time} onChange={this.feedWeekendChange.bind(this)}/>
+                                <TimePicker className="boxBorder w-200" name="feedWeekend" onChange={this.feedWeekendChange.bind(this)} value={this.state.feedDetails.feedWeekend}/>
+
                             </Col>
 
                         </Row>
                         <Row className ="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Feed US Holiday SLA:</label>
                             </Col>
-                            <Col sm={4}>
-                                <TimePicker displayFormat="12-hour" name="feedUsHoliday" className='boxBorder'
-                                            time={this.state.time} onChange={this.feedUsHolidayMe.bind(this)}/>
+                            <Col sm={3}>
+                                <TimePicker className="boxBorder w-200" name="feedUsHoliday" onChange={this.feedUsHolidayMe.bind(this)} value={this.state.feedDetails.feedUsHoliday}/>
+
                             </Col>
                             <Col sm={3}>
                                 <label className="fontweightClass">Vendor Source Data End Point:</label>
@@ -268,10 +252,10 @@ formValid() {
 
                         </Row>
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Resource Path:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input className={"boxBorder"+(this.checkFieldValidation('resourcePath') ? " error" : "") } type="text" name="resourcePath"
                                        value={this.state.feedDetails.resourcePath} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('resourcePath')}</span>
@@ -288,10 +272,10 @@ formValid() {
 
                         </Row>
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Feed Frequency:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <select className={"boxBorder"+(this.checkFieldValidation('feedFrequency') ? " error" : "") } name="feedFrequency"
                                         value={this.state.feedDetails.feedFrequency} onChange={this.updateState}>
                                     <option value="Select">Select</option>
@@ -320,10 +304,10 @@ formValid() {
 
                         </Row>
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">No Of Files(in number):</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input className={"boxBorder"+(this.checkFieldValidation('noOfFiles') ? " error" : "") } type="number" name="noOfFiles"
                                        value={this.state.feedDetails.noOfFiles} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('noOfFiles')}</span>
@@ -340,10 +324,10 @@ formValid() {
                         </Row>
 
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Rentention Period(in days):</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input className={"boxBorder"+(this.checkFieldValidation('retentionPeriod') ? " error" : "") } type="number" name="retentionPeriod"
                                        value={this.state.feedDetails.retentionPeriod} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('retentionPeriod')}</span>
@@ -362,10 +346,10 @@ formValid() {
 
                         </Row>
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Loading Mode:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <select className={"boxBorder"+(this.checkFieldValidation('loadingMode') ? " error" : "") } name="loadingMode"
                                         value={this.state.feedDetails.loadingMode} onChange={this.updateState}>
                                     <option value="Select">Select</option>
@@ -376,8 +360,8 @@ formValid() {
                                 <span className='errorText'>{this.checkFieldValidation('loadingMode')}</span>
 
                             </Col>
-                                    <Col sm={3}>
-                                        <label className="fontweightClass">External Table Push:</label>
+                            <Col sm={3}>
+                                <label className="fontweightClass">External Table Push:</label>
                             </Col>
                             <Col sm={3}>
                                 <input type="radio" name="extTablePush" value="Yes"
@@ -392,10 +376,10 @@ formValid() {
                         </Row>
 
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Table Name and Login Credentials:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input className={"boxBorder"+(this.checkFieldValidation('tableNameCredentials') ? " error" : "") } type="text" name="tableNameCredentials"
                                        value={this.state.feedDetails.tableNameCredentials} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('tableNameCredentials')}</span>
@@ -416,10 +400,10 @@ formValid() {
                         </Row>
 
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Encryption:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input type="radio" name="encryption" value="Yes" checked={this.state.feedDetails.encryption === 'Yes'} onChange={this.updateState}>Yes</input>
                                 <input type="radio" name="encryption" value="No" checked={this.state.feedDetails.encryption === 'No'} onChange={this.updateState} >No</input>
 
@@ -438,10 +422,10 @@ formValid() {
                         </Row>
 
                         <Row className="p-5">
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="fontweightClass">Data Access Control:</label>
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={3}>
                                 <input className={"boxBorder"+(this.checkFieldValidation('dataControl') ? " error" : "") } type="text" name="dataControl"
                                        value={this.state.feedDetails.dataControl} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('dataControl')}</span>
@@ -459,7 +443,7 @@ formValid() {
 
                     <div className="feedForm m-5top">
                         <Row>
-                            <Col sm={2}>
+                            <Col sm={3}>
                                 <label className="m-5top">FILE DETAILS:</label>
                             </Col>
                             <Col sm={10}>
@@ -474,7 +458,6 @@ formValid() {
                            className="buttonStyle m-5top boxBorder indexColor fontweightClass colorFileDetails"></Input>
 
                 </Form>
-               
 
             </div>
 
