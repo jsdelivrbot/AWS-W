@@ -7,9 +7,26 @@ export default class App extends Component {
 
     constructor(props) {
         super(props);
+        this.state =
+            {
+                selectedTab: "first",
+                selectedFeedId: ""
+            };
+        this.selectTab = this.selectTab.bind(this);
+        this.navigateToConfigureNewFeed = this.navigateToConfigureNewFeed.bind(this);
+
 
     }
 
+    selectTab(tab){
+
+        this.setState({selectedTab:tab});
+    }
+    navigateToConfigureNewFeed(selectedFeedId){
+        this.selectTab("first");
+
+        this.setState({selectedFeedId});
+    }
 
     render() {
         const {} = this.props;
@@ -20,30 +37,30 @@ export default class App extends Component {
                     FEED CONFIGURATION
                 </div>
 
-                <Tab.Container id="tabs-with-dropdown" defaultActiveKey="first">
+                <Tab.Container id="tabs-with-dropdown" activeKey={this.state.selectedTab}>
                     <Row className="clearfix">
                         <Col sm={12}>
                             <Nav pills>
 
-                                <NavItem eventKey="first">
+                                <NavItem className='test' eventKey="first" onClick={this.selectTab.bind(this,"first")}>
                                     Configure New Feed
                                 </NavItem>
 
-                                <NavItem eventKey="second">
+
+                                <NavItem className='test' eventKey="second" onClick={this.selectTab.bind(this,"second")}>
                                     ModifyExistingFeed
                                 </NavItem>
 
                             </Nav>
                         </Col>
 
-
                         <Col sm={12}>
                             <Tab.Content animation>
                                 <Tab.Pane eventKey="first">
-                                    <ConfigureNewFeed />
+                                    <ConfigureNewFeed selectedFeedId={this.state.selectedFeedId} />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
-                                    <ModifyExistingFeed/>
+                                    <ModifyExistingFeed changeTab={this.navigateToConfigureNewFeed}/>
                                 </Tab.Pane>
                             </Tab.Content>
                         </Col>

@@ -25,9 +25,24 @@
     border: 2px solid blue;
 }
 
-.marginDetails
+.m-5top
 {
     margin-top:5px;
+}
+
+.m-20top
+{
+    margin-top: 20px;
+}
+
+.m-15left
+{
+    margin-left: 15px;
+}
+
+.m-15right
+{
+    margin-left: 15px;
 }
 
 .colorFileDetails
@@ -58,10 +73,27 @@
 }
 .error
 {
-    color:red;
+    border: 2px solid red;
 }
 
 .timepicker__container
 {
     border: 2px solid blue;
+}
+
+.errorText {
+    color: red;
+    font-size:20px;
+}
+
+.p-5
+{
+    padding:5px;
+}
+
+.test
+{
+    display: inline;
+    border: 2px solid blue;
+    padding: 0px 204px;
 }

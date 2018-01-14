@@ -4,9 +4,9 @@ import axios from 'axios';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import TimePicker from 'react-dropdown-timepicker';
+import TimePickerComponent from './timePickerComponent';
 
 export default class ConfigureNewFeed extends Component {
-
     constructor(props) {
         super(props);
 
@@ -16,15 +16,16 @@ export default class ConfigureNewFeed extends Component {
                 required: " *",
                 failureToleranceRangeError : " Range in between 1 to 100"
             },
+            feedWeekdayTime: {hour:12,minute:0},
             feedDetails: {
                 feedId : "",
                 feedName: "",
                 feedSubject : "",
                 feedTarget : "",
                 feedFrequency : "",
-                feedWeekday: "",
-                feedWeekend : "",
-                feedUsHoliday : "",
+                feedWeekday: "12:00PM",
+                feedWeekend : "12:00PM",
+                feedUsHoliday : "12:00PM",
                 vendorSrcDataPoint : "",
                 resourcePath : "",
                 filePattern : "",
@@ -46,7 +47,11 @@ export default class ConfigureNewFeed extends Component {
 
 this.updateState = this.updateState.bind(this);
 this.saveFeedDetails = this.saveFeedDetails.bind(this);
+this.getFeed = this.getFeed.bind(this);
+}
 
+init(){
+    console.log("tuuuuu",this.props.selectedFeedId);
 }
 
 formValid() {
@@ -87,9 +92,7 @@ formValid() {
     saveFeedDetails = (event) => {
         this.setState({formDirty: true});
         if (this.formValid()) {
-	    alert("Feed Saved Successfully");
-            console.log("Makingrequest",this.state.feedDetails);
-            console.log("Requeststringfy",this.state.feedDetails);
+            alert("Feed Saved Successfully");
             const request = axios.post("/api/saveNewFeed",this.state.feedDetails);
             request.then(res => {
                 console.log(res);
@@ -99,9 +102,59 @@ formValid() {
 
     }
 
+    getFeed(feedId)
+    {
+        const request = axios.get('/api/getFeed?feedId='+feedId);
+        request.then(res => {
+            let feedWeekdayTime = res.data.feedWeekday;
+            let timeArray = feedWeekdayTime.split(':');
+            let data = Object.assign(({},res.data));
+            //data.feedWeekday = {hour:Number(timeArray[0]),minute:Number(timeArray[1].substr(0,2))};
+            this.setState({feedDetails:data});
+            console.log(res.data);
+            //this.setState({feedWeekdayTime:{hour:4,minute:0}});
+
+        })
+
+    }
+    formatTimeObject(time)
+    {
+
+
+        let indexOfColon = time.indexOf(":");
+
+        let hour = time.substring(0,indexOfColon);
+
+        let minute = time.substring(indexOfColon+1,indexOfColon+3);
+
+        let amorpm = time.substring(time.length-2);
+
+        hour = hour && amorpm === "PM" ? +hour+12:hour;
+
+
+        return {
+            hour:parseInt(hour),
+            minute:parseInt(minute)
+        };
+    }
+
+    componentDidUpdate(prevProps){
+
+       if(prevProps.selectedFeedId!=this.props.selectedFeedId && this.props.selectedFeedId){
+
+           this.getFeed(this.props.selectedFeedId);
+       }
+    }
+
+    /*shouldComponentUpdate(newProps,newState)
+    {
+        console.log("Gagan holani",newState);
+    }*/
     feedWeekdayChange(time) {
         this.setState(Object.assign(this.state.feedDetails, {feedWeekday: this.formatTime(time)}));
-
+        //this.setState({feedWeekdayTime:{hour:4,minute:0}});
+        //this.setState({feedWeekday: time});
+        //console.log('ZZZ',time);
     }
 
     feedWeekendChange(time) {
@@ -114,6 +167,7 @@ formValid() {
 
     }
 
+
     formatTime(time) {
         const amorpm = time.hour < 12 ? 'AM' : 'PM';
         const minute = time.minute < 10 ? '0' + time.minute.toString() : time.minute.toString();
@@ -123,7 +177,7 @@ formValid() {
     updateState(e) {
 
         this.setState(Object.assign(this.state.feedDetails, {[e.target.name]: e.target.value}));
-        console.log("gagan", this.state);
+
 
     }
 
@@ -181,8 +235,8 @@ formValid() {
                                 <label className="fontweightClass">Feed Weekday SLA:</label>
                             </Col>
                             <Col sm={4}>
-                                <TimePicker className="boxBorder" displayFormat="12-hour" name="feedWeekday" className='boxBorder'
-                                            time={this.state.time} onChange={this.feedWeekdayChange.bind(this)}/>
+                                <TimePickerComponent name="feedWeekday"
+                                            time={this.state.feedDetails.feedWeekday} onChange={this.feedWeekdayChange.bind(this)}/>
 
                             </Col>
                             <Col sm={3}>
@@ -420,6 +474,7 @@ formValid() {
                            className="buttonStyle m-5top boxBorder indexColor fontweightClass colorFileDetails"></Input>
 
                 </Form>
+               
 
             </div>
 

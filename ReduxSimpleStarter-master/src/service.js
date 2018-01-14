@@ -17,12 +17,40 @@ var feedstatus = utilities.savefeed(JSON.stringify(req.body));
 
 });
 
-app.get('/api/getNewFeed',function(req,res){
+app.get('/api/searchFeed',function(req,res){
 
     fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
-        console.log( data );
-       // res.end( data );
-        res.send(JSON.stringify(data));
+
+        let feedName = req.query.feedName;
+        let fileFormat = req.query.fileFormat;
+
+        let allFeeds = JSON.parse(data);
+
+        let filterFeeds = allFeeds.feeds.filter(function(feed){
+                    console.log("Full result",feed.fileFormat);
+            return feed.feedName.indexOf(feedName)>-1;
+
+        });
+
+        res.send(JSON.stringify(filterFeeds));
+    });
+})
+
+app.get('/api/getFeed',function(req,res){
+
+    fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
+
+        let feedId = req.query.feedId;
+        console.log("feedId is ",feedId);
+        let allFeeds = JSON.parse(data);
+
+        let filterFeeds = allFeeds.feeds.filter(function(feed){
+
+            return feed.feedId == feedId;
+
+        });
+
+        res.send(JSON.stringify(filterFeeds && filterFeeds[0]));
     });
 })
 
