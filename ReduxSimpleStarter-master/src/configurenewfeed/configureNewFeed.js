@@ -85,6 +85,7 @@ export default class ConfigureNewFeed extends Component {
     }
 
     saveFeedDetails = (event) => {
+
         this.setState({formDirty: true});
         if (this.formValid()) {
             alert("Feed Saved Successfully");
@@ -221,13 +222,13 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed Weekday SLA:</label>
                             </Col>
                             <Col sm={3}>
-                                <TimePicker className="boxBorder w-200" name="feedWeekday" onChange={this.feedWeekdayChange.bind(this)} value={this.state.feedDetails.feedWeekday}/>
+                                <TimePicker className="timBoxBorder w-200" name="feedWeekday" onChange={this.feedWeekdayChange.bind(this)} value={this.state.feedDetails.feedWeekday}/>
                             </Col>
                             <Col sm={3}>
                                 <label className="fontweightClass">Feed Weekend SLA</label>
                             </Col>
                             <Col sm={3}>
-                                <TimePicker className="boxBorder w-200" name="feedWeekend" onChange={this.feedWeekendChange.bind(this)} value={this.state.feedDetails.feedWeekend}/>
+                                <TimePicker className="timBoxBorder w-200" name="feedWeekend" onChange={this.feedWeekendChange.bind(this)} value={this.state.feedDetails.feedWeekend}/>
 
                             </Col>
 
@@ -237,7 +238,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed US Holiday SLA:</label>
                             </Col>
                             <Col sm={3}>
-                                <TimePicker className="boxBorder w-200" name="feedUsHoliday" onChange={this.feedUsHolidayMe.bind(this)} value={this.state.feedDetails.feedUsHoliday}/>
+                                <TimePicker className="timBoxBorder w-200" name="feedUsHoliday" onChange={this.feedUsHolidayMe.bind(this)} value={this.state.feedDetails.feedUsHoliday}/>
 
                             </Col>
                             <Col sm={3}>
@@ -276,7 +277,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed Frequency:</label>
                             </Col>
                             <Col sm={3}>
-                                <select className={"boxBorder"+(this.checkFieldValidation('feedFrequency') ? " error" : "") } name="feedFrequency"
+                                <select className={"boxBorder inputRadius w-200 h-31"+(this.checkFieldValidation('feedFrequency') ? " error inputRadius w-200 h-31" : "") } name="feedFrequency"
                                         value={this.state.feedDetails.feedFrequency} onChange={this.updateState}>
                                     <option value="Select">Select</option>
                                     <option value="Daily">Daily</option>
@@ -290,7 +291,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">File Format:</label>
                             </Col>
                             <Col sm={3}>
-                                <select className={"boxBorder"+(this.checkFieldValidation('fileFormat') ? " error" : "") } name="fileFormat"
+                                <select className={"boxBorder inputRadius w-200 h-31"+(this.checkFieldValidation('fileFormat') ? " error inputRadius w-200 h-31" : "") } name="fileFormat"
                                         value={this.state.feedDetails.fileFormat} onChange={this.updateState}>
                                     <option value="Select">Select</option>
                                     <option value="Delimited Text">Delimited Text</option>
@@ -308,15 +309,15 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">No Of Files(in number):</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('noOfFiles') ? " error" : "") } type="number" name="noOfFiles"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('noOfFiles') ? " error inputRadius" : "") } type="number" name="noOfFiles"
                                        value={this.state.feedDetails.noOfFiles} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('noOfFiles')}</span>
                             </Col>
                             <Col sm={3}>
-                                <label className="fontweightClass">Load Record Failure Tolerance(in %):</label>
+                                <label className="fontweightClass">Load Record Failure Tolerance:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('failureTolerance') ? " error" : "") } type="number" name="failureTolerance"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('failureTolerance') ? " error inputRadius" : "") } type="number" name="failureTolerance"
                                        value={this.state.feedDetails.failureTolerance} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('failureTolerance')}</span>
                             </Col>
@@ -328,7 +329,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Rentention Period(in days):</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('retentionPeriod') ? " error" : "") } type="number" name="retentionPeriod"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('retentionPeriod') ? " error inputRadius" : "") } type="number" name="retentionPeriod"
                                        value={this.state.feedDetails.retentionPeriod} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('retentionPeriod')}</span>
                             </Col>
@@ -350,7 +351,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Loading Mode:</label>
                             </Col>
                             <Col sm={3}>
-                                <select className={"boxBorder"+(this.checkFieldValidation('loadingMode') ? " error" : "") } name="loadingMode"
+                                <select className={"boxBorder inputRadius w-200 h-31"+(this.checkFieldValidation('loadingMode') ? " error inputRadius w-200 h-31" : "") } name="loadingMode"
                                         value={this.state.feedDetails.loadingMode} onChange={this.updateState}>
                                     <option value="Select">Select</option>
                                     <option value="Incremental">Incremental</option>
@@ -380,7 +381,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Table Name and Login Credentials:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('tableNameCredentials') ? " error" : "") } type="text" name="tableNameCredentials"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('tableNameCredentials') ? " error inputRadius" : "") } type="text" name="tableNameCredentials"
                                        value={this.state.feedDetails.tableNameCredentials} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('tableNameCredentials')}</span>
                             </Col>
@@ -412,7 +413,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed Notification Subscription:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('feedNotificationSubscription') ? " error" : "") } type="text" name="feedNotificationSubscription"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('feedNotificationSubscription') ? " error inputRadius" : "") } type="text" name="feedNotificationSubscription"
                                        value={this.state.feedDetails.feedNotificationSubscription}
                                        onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('feedNotificationSubscription')}</span>
@@ -426,36 +427,25 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Data Access Control:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('dataControl') ? " error" : "") } type="text" name="dataControl"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('dataControl') ? " error inputRadius" : "") } type="text" name="dataControl"
                                        value={this.state.feedDetails.dataControl} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('dataControl')}</span>
                             </Col>
                             <Col sm={3}>
-
+                                <label className="fontweightClass">FILE DETAILS:</label>
                             </Col>
                             <Col sm={3}>
-
-
+                                <input className="boxBorder inputRadius" type="text"/>
                             </Col>
 
                         </Row>
-                    </div>
-
-                    <div className="feedForm m-5top">
                         <Row>
-                            <Col sm={3}>
-                                <label className="m-5top">FILE DETAILS:</label>
+                            <Col sm={12}>
+                                <input type="button" onClick={this.saveFeedDetails.bind(this)} value="SAVE"
+                                       className="buttonStyle m-5top m-15right boxBorder indexColor fontweightClass colorFileDetails"></input>
                             </Col>
-                            <Col sm={10}>
-                                <Input className="boxBorder m-5top" type="text"/>
-
-                            </Col>
-
                         </Row>
                     </div>
-
-                    <Input type="button" onClick={this.saveFeedDetails.bind(this)} value="SAVE"
-                           className="buttonStyle m-5top boxBorder indexColor fontweightClass colorFileDetails"></Input>
 
                 </Form>
 

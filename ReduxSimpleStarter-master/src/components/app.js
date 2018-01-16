@@ -33,22 +33,23 @@ export default class App extends Component {
         return (
 
             <div>
-                <div className="feedForm colorFileDetails indexColor fontweightClass">
-                    FEED CONFIGURATION
+                <div className="feedForm colorFileDetails indexColor fontweightClass centreAlign">
+                    <span> FEED CONFIGURATION </span>
                 </div>
-
+                <div className="m-5top">.</div>
                 <Tab.Container id="tabs-with-dropdown" activeKey={this.state.selectedTab}>
+
                     <Row className="clearfix">
                         <Col sm={12}>
-                            <Nav pills>
+                            <Nav className="tabs">
 
-                                <NavItem className="test" eventKey="first" onClick={this.selectTab.bind(this,"first")}>
-                                    <span className={this.state.selectedTab == "first" ? ' colorFileDetails indexColor':''}>  Configure New Feed</span>
+                                <NavItem className={this.state.selectedTab == "first" ? ' test colorFileDetails indexColor':'test'} eventKey="first" onClick={this.selectTab.bind(this,"first")}>
+                                    <span>Configure New Feed</span>
                                 </NavItem>
 
 
-                                <NavItem className="test" eventKey="second" onClick={this.selectTab.bind(this,"second")}>
-                                    <span className={this.state.selectedTab == "second" ? ' colorFileDetails indexColor':''}>   ModifyExistingFeed </span>
+                                <NavItem className={this.state.selectedTab == "second" ? ' test colorFileDetails indexColor':'test'} eventKey="second" onClick={this.selectTab.bind(this,"second")}>
+                                    <span>ModifyExistingFeed</span>
                                 </NavItem>
 
                             </Nav>

@@ -1,13 +1,14 @@
 {
-  "feeds": [{
+  "Count":3,
+  "Items": [{
     "feedId": "34",
     "feedName": "name23",
     "feedSubject": "Subject1",
     "feedTarget": "Target1",
     "feedFrequency": "Monthly",
-    "feedWeekday": "4:00AM",
-    "feedWeekend": "4:00AM",
-    "feedUsHoliday": "5:00PM",
+    "feedWeekday": "6:00AM",
+    "feedWeekend": "5:00AM",
+    "feedUsHoliday": "7:00PM",
     "vendorSrcDataPoint": "datapoint1",
     "resourcePath": "resourcePath1",
     "filePattern": "Pattern1",
@@ -55,9 +56,9 @@
       "feedSubject": "Subject3",
       "feedTarget": "Target3",
       "feedFrequency": "Monthly",
-      "feedWeekday": "4:00AM",
-      "feedWeekend": "4:00AM",
-      "feedUsHoliday": "5:00PM",
+      "feedWeekday": "1:00AM",
+      "feedWeekend": "2:00AM",
+      "feedUsHoliday": "3:00PM",
       "vendorSrcDataPoint": "datapoint3",
       "resourcePath": "Path3",
       "filePattern": "pattern3",
@@ -74,5 +75,6 @@
       "feedNotificationSubscription": "subscription3",
       "dataControl": "control3"
     }
-  ]
+  ],
+  "ScannedCount":1
 }

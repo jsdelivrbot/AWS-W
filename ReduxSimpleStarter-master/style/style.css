@@ -9,9 +9,9 @@
 
 .feedForm
 {
-    border: 2px solid blue;
+    border: 2px solid #3299CC;
     padding:5px;
-    background-color: lightgrey;
+    background-color: whitesmoke;
 }
 
 .w-20
@@ -22,9 +22,13 @@
 
 .boxBorder
 {
-    border: 2px solid blue !important;
+    border: 1px solid #3299CC;
 }
 
+.timBoxBorder
+{
+    border: 1px solid #3299CC !important;
+}
 .m-5top
 {
     margin-top:5px;
@@ -46,15 +50,18 @@
 }
 
 .colorFileDetails
-
 {
-   background-color: #191970;
-
+   background-color: #3299CC;
 }
 
 .indexColor
 {
     color:white;
+}
+
+.indexColor a
+{
+    color:white !important;
 }
 
 .buttonStyle
@@ -73,12 +80,7 @@
 }
 .error
 {
-    border: 2px solid red;
-}
-
-.timepicker__container
-{
-    border: 2px solid blue;
+    border: 1px solid red;
 }
 
 .errorText {
@@ -94,11 +96,56 @@
 .test
 {
     display: inline;
-    border: 2px solid blue;
-    padding: 0px 203px;
+    border: 2px solid #3299CC;
+    padding: 1% 21%;
+    margin-top:5px;
 }
 
 .w-200
 {
     width: 200px !important;
+}
+
+.inputRadius
+{
+    border-radius: 5px;
+}
+
+.h-31
+{
+    height: 31px;
+}
+
+.backgroundColorBlue
+{
+    background-color: #42d7f4;
+}
+
+.indexColor a:hover {
+    text-decoration: none !important;
+}
+
+.test a:hover {
+    text-decoration: none !important;
+}
+
+.centreAlign
+{
+    text-align: center;
+}
+
+.tabs
+{
+    text-align:center;
+    height:31px;
+}
+
+.colorWhite
+{
+    background-color: whitesmoke;
+}
+
+.colorTextBlack
+{
+    color:black;
 }

@@ -7,4 +7,4 @@ ReactDOM.render(
   <div>
     <App />
   </div>
-  , document.querySelector('.container'));
+  , document.querySelector('.root'));

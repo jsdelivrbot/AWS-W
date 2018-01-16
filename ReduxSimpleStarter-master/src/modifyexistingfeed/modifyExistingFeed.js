@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Tab, Row, Col, Nav, NavItem} from 'react-bootstrap';
 import axios from 'axios';
-
+import SearchResultComponent from './searchResultComponent';
 export default class ModifyExistingFeed extends Component {
 
     constructor(props) {
@@ -17,10 +17,7 @@ export default class ModifyExistingFeed extends Component {
     }
     filterFeeds()
     {
-
-
         const feedName = this.state.feedName;
-
         this.searchFeed(feedName);
 
     }
@@ -28,8 +25,9 @@ export default class ModifyExistingFeed extends Component {
     {
         const request = axios.get('/api/searchFeed?feedName='+feedName);
         request.then(res => {
-            console.log(res.data);
-            this.setState({filteredFeeds:res.data});
+            //console.log(res.data);
+            this.setState({filteredFeeds:res.data.Items});
+           console.log("sds",this.state.filteredFeeds);
 
         })
 
@@ -49,29 +47,16 @@ export default class ModifyExistingFeed extends Component {
     render() {
         const {} = this.props;
         let filteredRows = this.state.filteredFeeds.map((feed,index)=>{
-            return <div className="feedForm colorFileDetails m-5top m-15right m-15left">
-                <Row>
-                    <Col sm={2}>
-                        <label className="indexColor fontweightClass">{index+1}</label>
-                    </Col>
-                    <Col sm={9}>
-                        <label className="indexColor fontweightClass">{feed.feedName}</label>
-                    </Col>
-                    <Col sm={1}>
-                        <input name={feed.feedId} type="button" onClick={this.editFeed} className="buttonStyle boxBorder indexColor fontweightClass colorFileDetails" value="EDIT"></input>
-                    </Col>
-                </Row>
-
-            </div>
-
+            return <SearchResultComponent {...feed} Sr={index+1} onClick={this.editFeed}/>
         });
         return (
             <div>
                 <form>
-                    <div className="feedForm colorFileDetails">
-                        <label className="indexColor">Search For Feed:</label>
-                    </div>
+
                     <div className="feedForm marginDetails">
+                        <div>
+                            <label className="fontweightClass colorTextBlack">Search For Feed:</label>
+                        </div>
                         <div className="feedForm m-5top m-15right m-15left">
                             <Row className ="p-5">
                                 <Col sm={2}>
