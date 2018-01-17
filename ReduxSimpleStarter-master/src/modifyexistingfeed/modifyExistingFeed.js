@@ -63,7 +63,7 @@ export default class ModifyExistingFeed extends Component {
                                     <label className="fontweightClass">Feed Name:</label>
                                 </Col>
                                 <Col sm={4}>
-                                    <input value={this.state.feedName} className="boxBorder" name="feedName" onChange={this.updateState} type="text"/>
+                                    <input value={this.state.feedName} className="boxBorder inputRadius" name="feedName" onChange={this.updateState} type="text"/>
 
 
                                 </Col>
@@ -71,7 +71,14 @@ export default class ModifyExistingFeed extends Component {
                                     <label className="fontweightClass">File Format:</label>
                                 </Col>
                                 <Col sm={3}>
-                                    <input className="boxBorder" name="assetClass" value="" type="text"/>
+                                    <select className="boxBorder inputRadius w-200 h-31" name="fileFormat"
+                                            value={this.state.fileFormat} onChange={this.updateState}>
+                                        <option value="Select">Select</option>
+                                        <option value="Delimited Text">Delimited Text</option>
+                                        <option value="JSON">JSON</option>
+                                        <option value="XML Delimeter">XML Delimiter</option>
+                                        <option value="Header/footer flag">Header/footer flag</option>
+                                    </select>
 
                                 </Col>
                                 <Col sm={1}>
@@ -81,10 +88,10 @@ export default class ModifyExistingFeed extends Component {
 
                             <Row className ="p-5">
                                 <Col sm={2}>
-                                    <label className="fontweightClass">Feed Type:</label>
+                                    <label className="fontweightClass">Feed Id:</label>
                                 </Col>
                                 <Col sm={4}>
-                                    <input className="boxBorder" name="feedName" value="" type="text"/>
+                                    <input className="boxBorder inputRadius" name="feedId" value="" type="text"/>
                                 </Col>
                                 <Col sm={3}>
 
@@ -99,8 +106,14 @@ export default class ModifyExistingFeed extends Component {
                                     <Col sm={2}>
                                         <label className="indexColor fontweightClass">Sr No.</label>
                                     </Col>
-                                    <Col sm={10}>
+                                    <Col sm={3}>
+                                        <label className="indexColor fontweightClass">Feed Id</label>
+                                    </Col>
+                                    <Col sm={3}>
                                         <label className="indexColor fontweightClass">Feed Name</label>
+                                    </Col>
+                                    <Col sm={4}>
+                                        <label className="indexColor fontweightClass">File Format</label>
                                     </Col>
                                 </Row>
                             </div>

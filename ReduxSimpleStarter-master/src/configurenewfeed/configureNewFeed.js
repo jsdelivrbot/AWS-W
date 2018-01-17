@@ -182,7 +182,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed ID:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('feedId') ? " error" : "") } name="feedId" value={this.state.feedDetails.feedId}
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('feedId') ? " error inputRadius" : "") } name="feedId" value={this.state.feedDetails.feedId}
                                        onChange={this.updateState} type="number"/>
                                 <span className='errorText'>{this.checkFieldValidation('feedId')}</span>
 
@@ -191,7 +191,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed Name:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('feedName') ? " error" : "") } name="feedName"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('feedName') ? " error inputRadius" : "") } name="feedName"
                                        value={this.state.feedDetails.feedName} onChange={this.updateState} type="text"/>
                                 <span className='errorText'>{this.checkFieldValidation('feedName')}</span>
                             </Col>
@@ -202,7 +202,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed Subject:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('feedSubject') ? " error" : "") } name="feedSubject"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('feedSubject') ? " error inputRadius" : "") } name="feedSubject"
                                        value={this.state.feedDetails.feedSubject} onChange={this.updateState}
                                        type="text"/>
                                 <span className='errorText'>{this.checkFieldValidation('feedSubject')}</span>
@@ -211,7 +211,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Feed Target:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('feedTarget') ? " error" : "") } name="feedTarget"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('feedTarget') ? " error inputRadius" : "") } name="feedTarget"
                                        value={this.state.feedDetails.feedTarget} onChange={this.updateState}
                                        type="text"/>
                                 <span className='errorText'>{this.checkFieldValidation('feedTarget')}</span>
@@ -245,7 +245,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Vendor Source Data End Point:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('vendorSrcDataPoint') ? " error" : "") } type="text" name="vendorSrcDataPoint"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('vendorSrcDataPoint') ? " error inputRadius" : "") } type="text" name="vendorSrcDataPoint"
                                        value={this.state.feedDetails.vendorSrcDataPoint} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('vendorSrcDataPoint')}</span>
 
@@ -257,7 +257,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">Resource Path:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('resourcePath') ? " error" : "") } type="text" name="resourcePath"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('resourcePath') ? " error inputRadius" : "") } type="text" name="resourcePath"
                                        value={this.state.feedDetails.resourcePath} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('resourcePath')}</span>
                             </Col>
@@ -265,7 +265,7 @@ export default class ConfigureNewFeed extends Component {
                                 <label className="fontweightClass">File Name Pattern:</label>
                             </Col>
                             <Col sm={3}>
-                                <input className={"boxBorder"+(this.checkFieldValidation('filePattern') ? " error" : "") } type="text" name="filePattern"
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('filePattern') ? " error inputRadius" : "") } type="text" name="filePattern"
                                        value={this.state.feedDetails.filePattern} onChange={this.updateState}/>
                                 <span className='errorText'>{this.checkFieldValidation('filePattern')}</span>
 
@@ -442,7 +442,7 @@ export default class ConfigureNewFeed extends Component {
                         <Row>
                             <Col sm={12}>
                                 <input type="button" onClick={this.saveFeedDetails.bind(this)} value="SAVE"
-                                       className="buttonStyle m-5top m-15right boxBorder indexColor fontweightClass colorFileDetails"></input>
+                                       className="buttonStyle m-5top m-15right boxBorder indexColor fontweightClass colorFileDetails buttonStyling"></input>
                             </Col>
                         </Row>
                     </div>
