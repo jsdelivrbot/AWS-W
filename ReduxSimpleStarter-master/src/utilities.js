@@ -97,7 +97,7 @@ module.exports = {
 	});
 },
 
- searchFeeddetails: function(inputFeedName){
+ searchFeeddetails: function(inputFeedName, callback){
 
   var AWS = require("aws-sdk");
  AWS.config.update({region: 'ap-south-1'});
@@ -116,13 +116,16 @@ module.exports = {
 docClient.query(params, function(err, data) {
 if (err) {
                         console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+                        callback(JSON.stringify(err, null, 2));
                 } else {
-                        console.log(JSON.stringify(data, null, 2));
+                        //console.log(JSON.stringify(data, null, 2));
+                        callback(JSON.stringify(data, null, 2));
                 }
         });
 
 
         //console.log("\n *EXIT* \n");
+//module.exports.searchFeeddetails = searchFeeddetails;
 }
 
 
