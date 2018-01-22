@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ConfigureNewFeed from '../configurenewfeed/configureNewFeed';
+import ConfigureNewFeedType from '../configurenewfeed/configureNewFeedType';
 import ModifyExistingFeed from '../modifyexistingfeed/modifyExistingFeed';
 import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 
@@ -10,7 +11,8 @@ export default class App extends Component {
         this.state =
             {
                 selectedTab: "first",
-                selectedFeedId: ""
+                selectedFeedId: "",
+                showFeedType: false
             };
         this.selectTab = this.selectTab.bind(this);
         this.navigateToConfigureNewFeed = this.navigateToConfigureNewFeed.bind(this);
@@ -31,42 +33,86 @@ export default class App extends Component {
     render() {
         const {} = this.props;
         return (
-
             <div>
-                <div className="feedForm colorFileDetails indexColor fontweightClass centreAlign">
-                    <span> FEED CONFIGURATION </span>
-                </div>
+            <div style={this.state.showFeedType ? {display:'none'} : {display:'block'}}>
+            <div className="feedForm colorFileDetails indexColor fontweightClass centreAlign">
+                <span> FEED CONFIGURATION </span>
+            </div>
                 <div className="m-5top">.</div>
-                <Tab.Container id="tabs-with-dropdown" activeKey={this.state.selectedTab}>
+            <Tab.Container id="tabs-with-dropdown" activeKey={this.state.selectedTab}>
 
-                    <Row className="clearfix">
-                        <Col sm={12}>
-                            <Nav className="tabs">
+                <Row className="clearfix">
+                    <Col sm={12}>
+                        <Nav className="tabs">
 
-                                <NavItem className={this.state.selectedTab == "first" ? ' test colorFileDetails indexColor':'test'} eventKey="first" onClick={this.selectTab.bind(this,"first")}>
-                                    <span>Configure New Feed</span>
-                                </NavItem>
+                            <NavItem
+                                className={this.state.selectedTab == "first" ? ' test colorFileDetails indexColor' : 'test'}
+                                eventKey="first" onClick={this.selectTab.bind(this, "first")}>
+                                <span>Configure New Feed</span>
+                            </NavItem>
 
 
-                                <NavItem className={this.state.selectedTab == "second" ? ' test colorFileDetails indexColor':'test'} eventKey="second" onClick={this.selectTab.bind(this,"second")}>
-                                    <span>ModifyExistingFeed</span>
-                                </NavItem>
+                            <NavItem
+                                className={this.state.selectedTab == "second" ? ' test colorFileDetails indexColor' : 'test'}
+                                eventKey="second" onClick={this.selectTab.bind(this, "second")}>
+                                <span>ModifyExistingFeed</span>
+                            </NavItem>
 
-                            </Nav>
-                        </Col>
+                        </Nav>
+                    </Col>
 
-                        <Col sm={12}>
-                            <Tab.Content animation>
-                                <Tab.Pane eventKey="first">
-                                    <ConfigureNewFeed selectedFeedId={this.state.selectedFeedId} />
-                                </Tab.Pane>
-                                <Tab.Pane eventKey="second">
-                                    <ModifyExistingFeed changeTab={this.navigateToConfigureNewFeed}/>
-                                </Tab.Pane>
-                            </Tab.Content>
-                        </Col>
-                    </Row>
-                </Tab.Container>
+                    <Col sm={12}>
+                        <Tab.Content animation>
+                            <Tab.Pane eventKey="first">
+                                <ConfigureNewFeed selectedFeedId={this.state.selectedFeedId}/>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="second">
+                                <ModifyExistingFeed changeTab={this.navigateToConfigureNewFeed}/>
+                            </Tab.Pane>
+                        </Tab.Content>
+                    </Col>
+                </Row>
+            </Tab.Container>
+            </div>
+
+
+            {/* feed type code */}
+                <div style={this.state.showFeedType ? {display:'block'} : {display:'none'}}>
+                    <div className="feedForm colorFileDetails indexColor fontweightClass">
+                        FEED TYPE CONFIGURATION
+                    </div>
+
+                    <Tab.Container id="tabs-with-dropdown" defaultActiveKey="first">
+                        <Row className="clearfix">
+                            <Col sm={12}>
+                                <Nav pills>
+
+                                    <NavItem eventKey="first">
+                                        Configure New Feed Type
+                                    </NavItem>
+
+                                    <NavItem eventKey="second">
+                                        Modify Existing Feed Feed Type
+                                    </NavItem>
+
+                                </Nav>
+                            </Col>
+
+
+                            <Col sm={12}>
+                                <Tab.Content animation>
+                                    <Tab.Pane eventKey="first">
+                                        <ConfigureNewFeedType />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="second">
+                                        <ModifyExistingFeed/>
+                                    </Tab.Pane>
+                                </Tab.Content>
+                            </Col>
+                        </Row>
+                    </Tab.Container>
+                </div>
+
             </div>
         );
     }
