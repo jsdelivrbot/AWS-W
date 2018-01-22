@@ -47,20 +47,25 @@ app.get('/api/searchFeed',function(req,res){
 
 app.get('/api/getFeed',function(req,res){
 
-    fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
+    //fs.readFile( __dirname + "/" + "student.json", 'utf8', function (err, data) {
 
         let feedId = req.query.feedId;
         console.log("feedId is ",feedId);
-        let allFeeds = JSON.parse(data);
+	var filterFeedDts;
+        //let allFeeds = JSON.parse(data);
 
-        let filterFeeds = allFeeds.feeds.filter(function(feed){
+      //  let filterFeeds = allFeeds.feeds.filter(function(feed){
 
-            return feed.feedId == feedId;
+        //    return feed.feedId == feedId;
 
-        });
+       // });
         //let filterFeed = utilities.getFeedDts(feedId);
         //res.send(JSON.stringify(filterFeed.item));
-        res.send(JSON.stringify(filterFeeds && filterFeeds[0]));
+       // res.send(JSON.stringify(filterFeeds && filterFeeds[0]));
+	utilities.getFeedDts(feedId,function(result) {
+        console.log('this is printing',result);
+        filterFeedDts = result;
+        res.send(filterFeedDts);
     });
 })
 

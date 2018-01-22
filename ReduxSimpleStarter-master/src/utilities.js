@@ -64,7 +64,7 @@ module.exports = {
  }
 ,
  
- getFeedDts: function(inputFeedId) {
+ getFeedDts: function(inputFeedId, callback) {
 
         // Define Dynamo DB
 	var AWS = require("aws-sdk");
@@ -89,9 +89,11 @@ module.exports = {
 	getDetails.get(params, function(err, data) {
 		if (err) {
 			console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+			callback(JSON.stringify(err, null, 2));
 			//return (JSON.stringify(err, null, 2));
 		} else {
 			console.log(JSON.stringify(data, null, 2));
+			callback(JSON.stringify(data, null, 2));
 			//return (JSON.stringify(data, null, 2));
 		}
 	});

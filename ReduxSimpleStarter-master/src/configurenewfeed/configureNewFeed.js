@@ -103,7 +103,7 @@ export default class ConfigureNewFeed extends Component {
         const request = axios.get('/api/getFeed?feedId='+feedId);
         request.then(res => {
             let data = Object.assign(({},res.data));
-            this.setState({feedDetails:data});
+            this.setState({feedDetails:data.Item});
             this.setState({feedWeekdayTime:this.formatTimeObject(data.feedWeekday)});
 
         })
