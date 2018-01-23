@@ -5,9 +5,6 @@ import axios from 'axios';
 import ReactFileReader from 'react-file-reader';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
-import TimePicker from 'react-dropdown-timepicker';
-// import ConfigureIntrospectionFeed from "../configureIntrospectionFeed/configureIntrospectionFeed";
-
 
 class ConfigureNewFeedType extends Component {
 
@@ -49,19 +46,18 @@ class ConfigureNewFeedType extends Component {
                 colHeaderArr: [],
                 changedcolHeaderArr: [],
                 headName: "",
-                readerResult: ""
-
+                readerResult: "",
+                dataTypeOptions: ['string','integer','date'],
+                selectedOption: ''
     }
 };
 
 this.updateState = this.updateState.bind(this);
 this.updateColState = this.updateColState.bind(this);
 this.saveFeedDetails = this.saveFeedDetails.bind(this);
-// this.processData = this.processData.bind(this);
-
 }
 
-formValid() {
+    formValid() {
     return this.state.feedDetails.feedId.toString().trim().length
         && this.state.feedDetails.feedName.toString().trim().length
         && this.state.feedDetails.feedSubject.toString().trim().length
@@ -97,17 +93,18 @@ formValid() {
     }
 
     saveFeedDetails = (event) => {
-        this.setState({formDirty: true});
-        if (this.formValid()) {
-	    alert("Feed Saved Successfully");
+
+        // this.setState({formDirty: true});
+        // if (this.formValid()) {
+        alert("Feed Saved Successfully");
             console.log("Makingrequest",this.state.feedDetails);
             console.log("Requeststringfy",this.state.feedDetails);
-            const request = axios.post("/api/saveNewFeed",this.state.feedDetails);
-            request.then(res => {
-                console.log(res);
-
-            })
-        }
+            // const request = axios.post("/api/saveNewFeed",this.state.feedDetails);
+            // request.then(res => {
+            //     console.log(res);
+            //
+            // })
+        // }
 
     }
 
@@ -155,26 +152,20 @@ formValid() {
     }
     processData(allText){
         let self = this;
-        console.log('allText ==== ',allText)
         if(allText !== ''){
             let allTextLines = allText.split(/\r\n|\n/);
             let headers = allTextLines[0].split(',');
             let lines = [];
             let tarr = [];
             let tarr1 = [];
+            console.log('headers ********** ',headers)
             for (let j=0; j<headers.length; j++) {
-                tarr.push({'key': j+1, 'value': headers[j] });
+                tarr.push({'key': j+1, 'value': headers[j], 'selectedValue': typeof headers[j], 'checked': '' });
             }
             lines.push(tarr);
-            console.log('tarr == ',tarr)
-            // console.log(self.state)
-            // self.setState(Object.assign(self.state.feedDetails, {colHeaderArr : tarr}));
-
             for (let k=0; k<headers.length; k++) {
-                tarr1.push({'key': 'headname_'+(k+1), 'value': '' });
+                tarr1.push({'key': 'headname_'+(k+1), 'value': headers[k], 'selectedValue': typeof headers[k], 'checked': '' });
             }
-            // self.setState(Object.assign(self.state.feedDetails, {changedcolHeaderArr : tarr1}));
-
             self.setState(Object.assign(self.state.feedDetails, {
                 colHeaderArr : tarr,
                 changedcolHeaderArr : tarr1
@@ -183,19 +174,24 @@ formValid() {
         }
     }
 
+    handleChange = (e) => {
+        let indexNum = e.target.name.split('_')[1] - 1;
+        let val = e.target.value
+        this.setState(Object.assign(this.state.feedDetails.changedcolHeaderArr[indexNum], {selectedValue : val}));
+        console.log("updated state", this.state);
+    }
+    handleCheckbxevt = (e) => {
+        let indexNum = e.target.name - 1;
+        this.setState(Object.assign(this.state.feedDetails.changedcolHeaderArr[indexNum], {checked : 'y'}));
+        this.setState(Object.assign(this.state.feedDetails.colHeaderArr[indexNum], {checked : 'y'}));
+        console.log("updated state", this.state);
+    }
+
     render() {
         const {} = this.props;
-        console.log(this.state.feedDetails.colHeaderArr)
         const colHeaderArr = this.state.feedDetails.colHeaderArr;
-        console.log('colHeaderArr ==== ',colHeaderArr)
-        console.log('this.textInput',this.textInput)
         const readerResult = this.state.feedDetails.readerResult;
-        console.log('readerResult',readerResult)
-        if(this.textInput !== undefined){
-            colHeaderArr.map((item) => {
-                this.textInput.setAttribute('uniqueID',item.key)
-            })
-        }
+        const dataTypeOptions = this.state.feedDetails.dataTypeOptions;
         return (
 
             <div>
@@ -311,52 +307,59 @@ formValid() {
                                             <label className="m-5top">FIELDS</label>
                                         </Col>
                                         <Col sm={10}>
-
                                         </Col>
 
                                     </Row>
                                     <Row className="p-5">
-                                        <Col sm={3}>
+                                        <Col sm={1}>
                                             <label className="fontweightClass">Sr No</label>
                                         </Col>
-                                        <Col sm={4}>
+                                        <Col sm={1}>
+                                            <label className="fontweightClass">Primary Key check</label>
+                                        </Col>
+                                        <Col sm={2}>
                                             <label className="fontweightClass">Current Header</label>
                                         </Col>
-                                        <Col sm={5}>
+                                        <Col sm={3}>
                                             <label className="fontweightClass">Changed Header</label>
                                         </Col>
+                                        <Col sm={3}>
+                                            <label className="fontweightClass">Datatype</label>
+                                        </Col>
                                     </Row>
-                                    <Row>
-                                        {/*{*/}
-                                        {/*colHeaderArr.map((item) =>*/}
-                                            {/*<ConfigureIntrospectionFeed*/}
-                                                {/*item={item}*/}
-                                            {/*/>*/}
-                                        {/*)}*/}
-                                        {
-                                            colHeaderArr.map((item) =>
-                                                <Row className="p-5">
-                                                    <Col sm={2}>
-                                                        <label className="fontweightClass">{item.key}</label>
-                                                    </Col>
-                                                    <Col sm={4}>
-                                                        <label className="fontweightClass">{item.value}</label>
-                                                    </Col>
-                                                    <Col sm={4} key={item.key}>
-                                                        <input className={"boxBorder"+(this.checkFieldValidation('headName') ? " error" : "") } name={"headname_"+item.key}
-                                                               defaultValue={item.value}
-                                                               onChange={this.updateColState}
-                                                               type="text"
-                                                               // ref={"head_"+item.value}
-                                                        />
-                                                    </Col>
-                                                </Row>
-                                            )}
+                                     {
+                                        colHeaderArr.map((item) =>
+                                            <Row className="p-5">
+                                                <Col sm={1}>
+                                                    <label className="fontweightClass">{item.key}</label>
+                                                </Col>
+                                                <Col sm={1}>
+                                                    <input type="checkbox" name={item.key} onClick={this.handleCheckbxevt} value="prKeyCheck" checked={item.checked === '' ? false : true} />
+                                                </Col>
+                                                <Col sm={2}>
+                                                    <label className="fontweightClass">{item.value}</label>
+                                                </Col>
+                                                <Col sm={3} key={item.key}>
+                                                    <input className={"boxBorder"+(this.checkFieldValidation('headName') ? " error" : "") } name={"headname_"+item.key}
+                                                           defaultValue={item.value}
+                                                           onChange={this.updateColState}
+                                                           type="text"
+                                                           // ref={"head_"+item.value}
+                                                    />
+                                                </Col>
+                                                <Col sm={3}>
+                                                    <select onChange={this.handleChange} name={"headname_"+item.key}>
+                                                        <option>string</option>
+                                                        <option>integer</option>
+                                                        <option>date</option>
+                                                    </select>
 
-                                    </Row>
-                                    <Row>
-                                        <col sm={11}/>
-                                        <Col sm={1}>
+                                                </Col>
+                                            </Row>
+                                     )}
+
+                                    <Row className="p-5">
+                                        <Col sm={12}>
                                             <Input type="button" onClick={this.saveFeedDetails.bind(this)} value="SAVE"
                                                    className="buttonStyle m-5top boxBorder indexColor fontweightClass colorFileDetails"></Input>
                                         </Col>
