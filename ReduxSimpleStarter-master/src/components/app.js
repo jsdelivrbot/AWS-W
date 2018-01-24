@@ -12,7 +12,7 @@ export default class App extends Component {
             {
                 selectedTab: "first",
                 selectedFeedId: "",
-                showFeedType: true
+                showFeedType: false
             };
         this.selectTab = this.selectTab.bind(this);
         this.navigateToConfigureNewFeed = this.navigateToConfigureNewFeed.bind(this);
