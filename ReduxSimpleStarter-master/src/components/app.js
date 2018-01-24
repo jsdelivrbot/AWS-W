@@ -12,7 +12,7 @@ export default class App extends Component {
             {
                 selectedTab: "first",
                 selectedFeedId: "",
-                showFeedType: false
+                showFeedType: true
             };
         this.selectTab = this.selectTab.bind(this);
         this.navigateToConfigureNewFeed = this.navigateToConfigureNewFeed.bind(this);
@@ -78,22 +78,26 @@ export default class App extends Component {
 
             {/* feed type code */}
                 <div style={this.state.showFeedType ? {display:'block'} : {display:'none'}}>
-                    <div className="feedForm colorFileDetails indexColor fontweightClass">
-                        FEED TYPE CONFIGURATION
+                    <div className="feedForm colorFileDetails indexColor fontweightClass centreAlign">
+                        <span> FEED TYPE CONFIGURATION </span>
                     </div>
-
-                    <Tab.Container id="tabs-with-dropdown" defaultActiveKey="first">
+                    <div className="m-5top">.</div>
+                    <Tab.Container id="tabs-with-dropdown" activeKey={this.state.selectedTab}>
                         <Row className="clearfix">
                             <Col sm={12}>
-                                <Nav pills>
+                                <Nav className="tabs">
 
-                                    <NavItem eventKey="first">
-                                        Configure New Feed Type
+                                    <NavItem
+                                        className={this.state.selectedTab == "first" ? ' test1 colorFileDetails indexColor' : 'test1'}
+                                        eventKey="first" onClick={this.selectTab.bind(this, "first")}>
+                                        <span>Configure New Feed Type</span>
                                     </NavItem>
 
-                                    <NavItem eventKey="second">
-                                        Modify Existing Feed Feed Type
-                                    </NavItem>
+                                    {/*<NavItem*/}
+                                        {/*className={this.state.selectedTab == "second" ? ' test1 colorFileDetails indexColor' : 'test1'}*/}
+                                        {/*eventKey="second" onClick={this.selectTab.bind(this, "second")}>*/}
+                                        {/*<span>Modify Existing Feed Feed Type</span>*/}
+                                    {/*</NavItem>*/}
 
                                 </Nav>
                             </Col>
@@ -103,9 +107,6 @@ export default class App extends Component {
                                 <Tab.Content animation>
                                     <Tab.Pane eventKey="first">
                                         <ConfigureNewFeedType />
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey="second">
-                                        <ModifyExistingFeed/>
                                     </Tab.Pane>
                                 </Tab.Content>
                             </Col>

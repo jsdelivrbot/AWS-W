@@ -16,6 +16,15 @@ app.post('/api/saveNewFeed', function (req, res) {
 var feedstatus = utilities.savefeed(JSON.stringify(req.body));
 
 });
+app.post('/api/saveNewFeedType', function (req, res) {
+    console.log('post call',(JSON.stringify(req.body)))
+
+    res.send(JSON.stringify(req.body));
+
+//Insert into Dynamo DB
+var feedTypestatus = utilities.savefeed(JSON.stringify(req.body));
+
+});
 
 app.get('/api/searchFeed',function(req,res){
 
