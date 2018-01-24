@@ -1,0 +1,248 @@
+.colorText{
+    color:blue;
+}
+
+.fontweightClass
+{
+    font-weight:bold;
+}
+
+.feedForm
+{
+    border: 2px solid #3299CC;
+    padding:5px;
+    background-color: whitesmoke;
+}
+
+.w-20
+{
+    width:50px;
+    height:20px;
+}
+
+.boxBorder
+{
+    border: 1px solid #3299CC;
+}
+
+.timBoxBorder
+{
+    border: 1px solid #3299CC !important;
+}
+.m-5top
+{
+    margin-top:5px;
+}
+
+.m-20top
+{
+    margin-top: 20px;
+}
+
+.m-15left
+{
+    margin-left: 15px;
+}
+
+.m-15right
+{
+    margin-left: 15px;
+}
+
+.colorFileDetails
+{
+   background-color: #3299CC;
+}
+
+.indexColor
+{
+    color:white;
+}
+
+.indexColor a
+{
+    color:white !important;
+}
+
+.buttonStyle
+{
+    float: right;
+}
+
+.w-45
+{
+    width: 45px;
+}
+
+.w-100
+{
+    width: 110px;
+}
+.error
+{
+    border: 1px solid red;
+}
+
+.errorText {
+    color: red;
+    font-size:20px;
+}
+
+.p-5
+{
+    padding:5px;
+}
+
+.test
+{
+    display: inline;
+    border: 2px solid #3299CC;
+    padding: 10px 311px;
+    margin-top:5px;
+}
+.test1
+{
+    display: inline;
+    border: 2px solid #3299CC;
+    padding: 10px 545px;
+    margin-top:5px;
+}
+
+.w-200
+{
+    width: 197px !important;
+}
+
+.inputRadius
+{
+    border-radius: 5px;
+}
+
+.h-31
+{
+    height: 31px;
+}
+
+.backgroundColorBlue
+{
+    background-color: #42d7f4;
+}
+
+.indexColor a:hover {
+    text-decoration: none !important;
+}
+
+.test a:hover {
+    text-decoration: none !important;
+}
+.test1 a:hover {
+    text-decoration: none !important;
+}
+
+.centreAlign
+{
+    text-align: center;
+}
+
+.tabs
+{
+    text-align:center;
+    height:31px;
+}
+
+.colorWhite
+{
+    background-color: whitesmoke;
+}
+
+.colorTextBlack
+{
+    color:black;
+}
+
+.buttonStyling
+{
+    width:101px;
+    height:40px;
+    font-size:19px;
+}
+.introspectbuttonStyling
+{
+    width:161px;
+    height:40px;
+    font-size:19px;
+}
+.selectStyle{
+    width: 80px;
+    font-size: 16px;
+    height: 26px;
+}
+
+/********* checkbox stylesheet **********/
+/*.checkboxCont {*/
+    /*display: block;*/
+    /*position: relative;*/
+    /*padding-left: 35px;*/
+    /*margin-bottom: 12px;*/
+    /*cursor: pointer;*/
+    /*font-size: 22px;*/
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-ms-user-select: none;*/
+    /*user-select: none;*/
+/*}*/
+
+
+
+
+/* Hide the browser's default checkbox */
+/*.checkboxCont input {*/
+    /*position: absolute;*/
+    /*opacity: 0;*/
+    /*cursor: pointer;*/
+/*}*/
+
+/*!* Create a custom checkbox *!*/
+/*.checkmark {*/
+    /*position: absolute;*/
+    /*top: 0;*/
+    /*left: 0;*/
+    /*height: 25px;*/
+    /*width: 25px;*/
+    /*background-color: #eee;*/
+/*}*/
+
+/*!* On mouse-over, add a grey background color *!*/
+/*.checkboxCont:hover input ~ .checkmark {*/
+    /*background-color: #ccc;*/
+/*}*/
+
+/*!* When the checkbox is checked, add a blue background *!*/
+/*.checkboxCont input:checked ~ .checkmark {*/
+    /*background-color: #2196F3;*/
+/*}*/
+
+/*!* Create the checkmark/indicator (hidden when not checked) *!*/
+/*.checkboxCont:after {*/
+    /*content: "";*/
+    /*position: absolute;*/
+    /*display: none;*/
+/*}*/
+
+/*!* Show the checkmark when checked *!*/
+/*.checkboxCont input:checked ~ .checkmark:after {*/
+    /*display: block;*/
+/*}*/
+
+/*!* Style the checkmark/indicator *!*/
+/*.checkboxCont .checkmark:after {*/
+    /*left: 9px;*/
+    /*top: 5px;*/
+    /*width: 5px;*/
+    /*height: 10px;*/
+    /*border: solid white;*/
+    /*border-width: 0 3px 3px 0;*/
+    /*-webkit-transform: rotate(45deg);*/
+    /*-ms-transform: rotate(45deg);*/
+    /*transform: rotate(45deg);*/
+/*}*/
