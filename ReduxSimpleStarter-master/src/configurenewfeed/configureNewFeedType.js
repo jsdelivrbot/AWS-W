@@ -61,7 +61,6 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
     }
 
     savefeedTypeDetails = (event) => {
-        alert("Feed Saved Successfully");
         console.log("Makingrequest",this.state.feedTypeDetails);
         console.log("Requeststringfy",this.state.feedTypeDetails);
         let feedTypeData = {
@@ -97,7 +96,7 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
 
         this.setState({formDirty: true});
         if (this.formValid()) {
-            alert("Feed Saved Successfully");
+            alert("Feed type Saved Successfully");
             const request = axios.post("/api/saveNewFeedType",feedTypeData);
             request.then(res => {
                 console.log(res);
@@ -146,6 +145,7 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
             let tarr = [];
             let tarr1 = [];
             console.log('headers ********** ',headers)
+
             for (let j=0; j<headers.length; j++) {
                 tarr.push({'key': j+1, 'value': headers[j], 'selectedValue': typeof headers[j], 'checked': false });
             }
