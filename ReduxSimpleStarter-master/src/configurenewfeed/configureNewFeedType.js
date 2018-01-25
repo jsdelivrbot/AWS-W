@@ -256,11 +256,14 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
                             <Col sm={2}>
                                 <label className="fontweightClass">Sample Feed URL :</label>
                             </Col>
+                            <Col sm={2}>
+                                <input className={"boxBorder inputRadius"+(this.checkFieldValidation('feedType') ? " error" : "") } name="feedType" />
+                            </Col>
                             <Col sm={4}>
                                 <ReactFileReader handleFiles={this.handleFiles} fileTypes={'.csv'}>
                                     <Input type="button"
                                            value="UPLOAD"
-                                           className="m-5top boxBorder indexColor fontweightClass colorFileDetails buttonStyling">
+                                           className="boxBorder indexColor fontweightClass colorFileDetails buttonStyling">
                                     </Input>
                                 </ReactFileReader>
                                 <span>{fileUrl}</span>
@@ -275,12 +278,21 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
                                        value={this.state.feedTypeDetails.fileName} onChange={this.updateState}
                                        type="text"/>
                             </Col>
-                            <Col sm={4}>
-                                <Input type="button"
-                                       onClick={() => this.processData(readerResult)}
-                                       value="INTROSPECT"
-                                        className="buttonStyle m-5top boxBorder indexColor fontweightClass colorFileDetails introspectbuttonStyling">
-                                </Input>
+                            {/*<Col sm={4}>*/}
+                                {/*<Input type="button"*/}
+                                       {/*onClick={() => this.processData(readerResult)}*/}
+                                       {/*value="INTROSPECT"*/}
+                                        {/*className="buttonStyle m-5top boxBorder indexColor fontweightClass colorFileDetails introspectbuttonStyling">*/}
+                                {/*</Input>*/}
+                            {/*</Col>*/}
+                        </Row>
+                        <Row>
+                            <Col sm={5}>
+                            <Input type="button"
+                            onClick={() => this.processData(readerResult)}
+                            value="INTROSPECT"
+                            className="buttonStyle m-5top boxBorder indexColor fontweightClass colorFileDetails introspectbuttonStyling">
+                            </Input>
                             </Col>
                         </Row>
 
