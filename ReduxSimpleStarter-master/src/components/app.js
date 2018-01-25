@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
+// import Input from 'react-validation/build/input';
 import ConfigureNewFeed from '../configurenewfeed/configureNewFeed';
 import ConfigureNewFeedType from '../configurenewfeed/configureNewFeedType';
 import ModifyExistingFeed from '../modifyexistingfeed/modifyExistingFeed';
-import { Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 
 export default class App extends Component {
 
@@ -24,6 +25,11 @@ export default class App extends Component {
 
         this.setState({selectedTab:tab});
     }
+    buttonClicked(){
+
+        this.setState({showFeedType:!this.state.showFeedType});
+    }
+
     navigateToConfigureNewFeed(selectedFeedId){
         this.selectTab("first");
 
@@ -34,6 +40,10 @@ export default class App extends Component {
         const {} = this.props;
         return (
             <div>
+                <button
+                    className={"m-5top boxBorder indexColor fontweightClass colorFileDetails"}
+                    onClick={this.buttonClicked.bind(this)}>{this.state.showFeedType ? 'Go to feed' : 'Go to feedType'}</button>
+                <div>&nbsp;</div>
             <div style={this.state.showFeedType ? {display:'none'} : {display:'block'}}>
             <div className="feedForm colorFileDetails indexColor fontweightClass centreAlign">
                 <span> FEED CONFIGURATION </span>
@@ -93,11 +103,11 @@ export default class App extends Component {
                                         <span>Configure New Feed Type</span>
                                     </NavItem>
 
-                                    {/*<NavItem*/}
-                                        {/*className={this.state.selectedTab == "second" ? ' test1 colorFileDetails indexColor' : 'test1'}*/}
-                                        {/*eventKey="second" onClick={this.selectTab.bind(this, "second")}>*/}
-                                        {/*<span>Modify Existing Feed Feed Type</span>*/}
-                                    {/*</NavItem>*/}
+                                    <NavItem
+                                        className={this.state.selectedTab == "second" ? ' test1 colorFileDetails indexColor' : 'test1'}
+                                        eventKey="second" onClick={this.selectTab.bind(this, "second")}>
+                                        <span>Modify Existing Feed Feed Type</span>
+                                    </NavItem>
 
                                 </Nav>
                             </Col>

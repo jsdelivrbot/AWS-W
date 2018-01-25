@@ -25,12 +25,10 @@ class ConfigureNewFeedType extends Component {
                 fileName: "",
                 fileUrl: "",
                 colHeaderArr: [],
-                changedcolHeaderArr: [],
-                headName: "",
-                readerResult: "",
-                dataTypeOptions: ['string','integer','date'],
-                selectedOption: ''
-            }
+                changedcolHeaderArr: []
+            },
+            dataTypeOptions: ['string','integer','float','date'],
+            readerResult: ""
 };
 
 this.updateState = this.updateState.bind(this);
@@ -66,10 +64,41 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
         alert("Feed Saved Successfully");
         console.log("Makingrequest",this.state.feedTypeDetails);
         console.log("Requeststringfy",this.state.feedTypeDetails);
+        let feedTypeData = {
+            feedType : "",
+            feedTypeId: "",
+            fileFormat : "",
+            feedSubject : "",
+            fileName: "",
+            fileUrl: "",
+            colData: []
+        }
+        let getData = [];
+        // Object.assign(self.state.feedTypeDetails, {fileUrl: files[0].name});
+        Object.assign(
+            feedTypeData, {feedType: this.state.feedTypeDetails.feedType},
+            {feedTypeId: this.state.feedTypeDetails.feedTypeId},
+            {fileFormat: this.state.feedTypeDetails.fileFormat},
+            {feedSubject: this.state.feedTypeDetails.feedSubject},
+            {fileName: this.state.feedTypeDetails.fileName},
+            {fileUrl: this.state.feedTypeDetails.fileUrl}
+        );
+        for(let i=0; i<this.state.feedTypeDetails.changedcolHeaderArr.length; i++){
+            let currColHead = this.state.feedTypeDetails.colHeaderArr[i].value;
+            let changedColHead = this.state.feedTypeDetails.changedcolHeaderArr[i].value;
+            let dataType = this.state.feedTypeDetails.changedcolHeaderArr[i].selectedValue;
+            let prKey = this.state.feedTypeDetails.changedcolHeaderArr[i].prKey;
+            getData.push({'currColHead':currColHead, 'changedColHead':changedColHead,'dataType':dataType, 'prKey':prKey})
+            console.log(getData)
+        }
+        Object.assign(feedTypeData, {colData: getData})
+
+       console.log('feedTypeData',feedTypeData)
+
         this.setState({formDirty: true});
         if (this.formValid()) {
             alert("Feed Saved Successfully");
-            const request = axios.post("/api/saveNewFeedType",this.state.feedTypeDetails);
+            const request = axios.post("/api/saveNewFeedType",feedTypeData);
             request.then(res => {
                 console.log(res);
 
@@ -101,7 +130,7 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
         reader.onload = function(e) {
             // Use reader.result
             console.log(reader.result);
-            self.setState(Object.assign(self.state.feedTypeDetails, {readerResult: reader.result}));
+            self.setState(Object.assign(self.state, {readerResult: reader.result}));
             self.setState(Object.assign(self.state.feedTypeDetails, {fileUrl: files[0].name}));
             console.log("gagan", self.state);
         }
@@ -122,7 +151,7 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
             }
             lines.push(tarr);
             for (let k=0; k<headers.length; k++) {
-                tarr1.push({'key': 'headname_'+(k+1), 'value': headers[k], 'selectedValue': typeof headers[k], 'checked': false });
+                tarr1.push({'key': 'headname_'+(k+1), 'value': headers[k], 'selectedValue': typeof headers[k], 'checked': false, 'prKey': 'n' });
             }
             console.log('tarr1',tarr1)
             // self.setState(Object.assign(self.state.feedTypeDetails, {
@@ -146,15 +175,20 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
     handleCheckbxevt = (e) => {
         let indexNum = e.target.name - 1;
         this.setState(Object.assign(this.state.feedTypeDetails.changedcolHeaderArr[indexNum], {checked : !this.state.feedTypeDetails.changedcolHeaderArr[indexNum].checked}));
-
+        // this.setState(Object.assign(this.state.feedTypeDetails.changedcolHeaderArr[indexNum], {checked : !this.state.feedTypeDetails.changedcolHeaderArr[indexNum].checked}));
+        if(this.state.feedTypeDetails.changedcolHeaderArr[indexNum].checked){
+            this.setState(Object.assign(this.state.feedTypeDetails.changedcolHeaderArr[indexNum], {prKey : 'y'}));
+        }else{
+            this.setState(Object.assign(this.state.feedTypeDetails.changedcolHeaderArr[indexNum], {prKey : 'n'}));
+        }
         console.log("updated state", this.state);
     }
 
     render() {
         const {} = this.props;
         const colHeaderArr = this.state.feedTypeDetails.colHeaderArr;
-        const readerResult = this.state.feedTypeDetails.readerResult;
-        const dataTypeOptions = this.state.feedTypeDetails.dataTypeOptions;
+        const readerResult = this.state.readerResult;
+        const dataTypeOptions = this.state.dataTypeOptions;
         const fileUrl = this.state.feedTypeDetails.fileUrl;
         console.log('colHeaderArr == ',colHeaderArr)
         return (
@@ -306,6 +340,7 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
                                                     <select onChange={this.handleChange} name={"headname_"+item.key} className="boxBorder selectStyle">
                                                         <option>string</option>
                                                         <option>integer</option>
+                                                        <option>float</option>
                                                         <option>date</option>
                                                     </select>
 
