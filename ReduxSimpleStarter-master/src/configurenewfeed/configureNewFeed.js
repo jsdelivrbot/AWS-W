@@ -4,8 +4,6 @@ import axios from 'axios';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import TimePicker from 'react-bootstrap-time-picker';
-import NumericInput from 'react-numeric-input';
-import Popup from 'react-popup';
 import Modal from 'react-modal';
 import customStyles from './modalStyle';
 
