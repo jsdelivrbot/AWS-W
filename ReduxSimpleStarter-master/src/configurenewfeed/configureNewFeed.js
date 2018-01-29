@@ -4,19 +4,15 @@ import axios from 'axios';
 import Form from 'react-validation/build/form';
 import Input from 'react-validation/build/input';
 import TimePicker from 'react-bootstrap-time-picker';
+import NumericInput from 'react-numeric-input';
+import Popup from 'react-popup';
+import Modal from 'react-modal';
+import customStyles from './modalStyle';
 
 export default class ConfigureNewFeed extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            formDirty: false,
-            errors: {
-                required: " *",
-                failureToleranceRangeError : " Range in between 1 to 100"
-            },
-            feedWeekdayTime: {hour:12,minute:0},
-            feedDetails: {
+        this.initialFeedDetails = {
                 feedId : "",
                 feedName: "",
                 feedSubject : "",
@@ -41,12 +37,34 @@ export default class ConfigureNewFeed extends Component {
                 feedNotificationSubscription : "",
                 dataControl : ""
 
-            }
         };
+        this.state = {
+            modalIsOpen: false,
+            modalMessage:"",
+            modalTitle:"",
+            formDirty: false,
+            errors: {
+                required: " *",
+                failureToleranceRangeError : " Range in between 1 to 100"
+            },
+            feedWeekdayTime: {hour:12,minute:0},
+            feedDetails: this.initialFeedDetails
+        };
+
 
         this.updateState = this.updateState.bind(this);
         this.saveFeedDetails = this.saveFeedDetails.bind(this);
         this.getFeed = this.getFeed.bind(this);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+    }
+
+    openModal() {
+        this.setState({modalIsOpen: true});
+    }
+    closeModal() {
+        //this.setState(this.initialState);
+       this.setState({modalIsOpen: false});
     }
 
     formValid() {
@@ -87,13 +105,48 @@ export default class ConfigureNewFeed extends Component {
     saveFeedDetails = (event) => {
 
         this.setState({formDirty: true});
+
         if (this.formValid()) {
-            alert("Feed Saved Successfully");
             const request = axios.post("/api/saveNewFeed",this.state.feedDetails);
             request.then(res => {
+                this.openModal();
+                this.setState({modalMessage:"Your Feed Id is "+res.data.feedId});
+                this.setState({modalTitle:"Feed created successfully"});
+                this.setState(Object.assign(this.state.feedDetails,{
+                    feedId : "",
+                    feedName: "",
+                    feedSubject : "",
+                    feedTarget : "",
+                    feedFrequency : "",
+                    feedWeekday: "12:00 PM",
+                    feedWeekend : "12:00 PM",
+                    feedUsHoliday : "12:00 PM",
+                    vendorSrcDataPoint : "",
+                    resourcePath : "",
+                    filePattern : "",
+                    fileFormat : "",
+                    noOfFiles : "",
+                    failureTolerance : "",
+                    retentionPeriod : "",
+                    tokenFile : "No",
+                    loadingMode : "",
+                    extTablePush : "No",
+                    tableNameCredentials: "",
+                    compression : "No",
+                    encryption : "No",
+                    feedNotificationSubscription : "",
+                    dataControl : ""
+
+                }));
+                this.setState({formDirty: false});
                 console.log(res);
 
-            })
+            }).catch(err=> {
+                this.openModal();
+                this.setState({modalTitle: "Feed Not Created"});
+                this.setState({modalMessage: "Feed Error"});
+
+            });
         }
 
     }
@@ -439,16 +492,31 @@ export default class ConfigureNewFeed extends Component {
                             </Col>
 
                         </Row>
+
                         <Row>
                             <Col sm={12}>
                                 <input type="button" onClick={this.saveFeedDetails.bind(this)} value="SAVE"
-                                       className="buttonStyle m-5top m-15right boxBorder indexColor fontweightClass colorFileDetails buttonStyling"></input>
+                                       className="buttonStyle m-5top m-15right boxBorder indexColor fontweightClass colorFileDetails buttonStyling"/>
+
                             </Col>
+
                         </Row>
+                        <Modal
+                            isOpen={this.state.modalIsOpen}
+                            onRequestClose={this.closeModal}
+                            style={customStyles}>
+                            <div>
+                            {this.state.modalTitle}
+                            </div>
+                            <div>
+                                {this.state.modalMessage}
+                            </div>
+                            <input type="button" onClick={this.closeModal.bind(this)} value="CLOSE"
+                                   className="buttonStyle m-5top m-15right boxBorder indexColor fontweightClass colorFileDetails buttonStyling" />
+                        </Modal>
                     </div>
 
                 </Form>
-
             </div>
 
 
