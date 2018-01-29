@@ -144,22 +144,54 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
             let lines = [];
             let tarr = [];
             let tarr1 = [];
-            console.log('headers ********** ',headers)
+            let row1 = allTextLines[1].split(',')
+            console.log('row1 ********** ',row1)
 
             for (let j=0; j<headers.length; j++) {
-                tarr.push({'key': j+1, 'value': headers[j], 'selectedValue': typeof headers[j], 'checked': false });
+                let chktype = +row1[j];
+                let dataType;
+                debugger;
+                if(isNaN(chktype)){
+                    if(Date.parse(row1[j])){
+                        dataType = 'date';
+                    }else{
+                        dataType = typeof row1[j]
+                    }
+                }else{
+                    dataType = typeof +row1[j];
+                    if(parseInt(row1[j]) == +row1[j]){
+                        dataType = 'integer';
+                    }else if(parseFloat(row1[j]) == +row1[j]){
+                        dataType = 'float';
+                    }
+                }
+                tarr.push({'key': j+1, 'value': headers[j], 'selectedValue': dataType, 'checked': false });
             }
             lines.push(tarr);
             for (let k=0; k<headers.length; k++) {
-                tarr1.push({'key': 'headname_'+(k+1), 'value': headers[k], 'selectedValue': typeof headers[k], 'checked': false, 'prKey': 'n' });
+                let chktype = +row1[k];
+                let dataType;
+                if(isNaN(chktype)){
+                    if(Date.parse(row1[k])){
+                        dataType = 'date';
+                    }else {
+                        dataType = typeof row1[k]
+                    }
+                }else{
+                    dataType = typeof +row1[k];
+                    if(parseInt(row1[k]) == +row1[k]){
+                        dataType = 'integer';
+                    }else if(parseFloat(row1[k]) == +row1[k]){
+                        dataType = 'float';
+                    }
+                }
+                tarr1.push({'key': 'headname_'+(k+1), 'value': headers[k], 'selectedValue': dataType, 'checked': false, 'prKey': 'n' });
             }
             console.log('tarr1',tarr1)
-            // self.setState(Object.assign(self.state.feedTypeDetails, {
-            //     colHeaderArr : tarr,
-            //     changedcolHeaderArr : tarr1
-            // }));
 
             self.setState(Object.assign(self.state.feedTypeDetails, {colHeaderArr : tarr}));
+            // self.setState({...self.state.feedTypeDetails : {colHeaderArr, tarr}});
+
             self.setState(Object.assign(self.state.feedTypeDetails, {changedcolHeaderArr : tarr1}));
 
             console.log("updated state", this.state);
@@ -350,10 +382,15 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
                                                 </Col>
                                                 <Col sm={3}>
                                                     <select onChange={this.handleChange} name={"headname_"+item.key} className="boxBorder selectStyle">
-                                                        <option>string</option>
-                                                        <option>integer</option>
-                                                        <option>float</option>
-                                                        <option>date</option>
+                                                        {/*<option>string</option>*/}
+                                                        {/*<option>integer</option>*/}
+                                                        {/*<option>float</option>*/}
+                                                        {/*<option>date</option>*/}
+                                                        {
+                                                            dataTypeOptions.map((type) =>
+                                                               <option value={type} selected={item.selectedValue === type ? true : false}>{type}</option>
+
+                                                        )}
                                                     </select>
 
                                                 </Col>
