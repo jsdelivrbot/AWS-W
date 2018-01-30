@@ -61,8 +61,6 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
     }
 
     savefeedTypeDetails = (event) => {
-        console.log("Makingrequest",this.state.feedTypeDetails);
-        console.log("Requeststringfy",this.state.feedTypeDetails);
         let feedTypeData = {
             feedType : "",
             feedTypeId: "",
@@ -85,23 +83,23 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
         for(let i=0; i<this.state.feedTypeDetails.changedcolHeaderArr.length; i++){
             let currColHead = this.state.feedTypeDetails.colHeaderArr[i].value;
             let changedColHead = this.state.feedTypeDetails.changedcolHeaderArr[i].value;
-            let dataType = this.state.feedTypeDetails.changedcolHeaderArr[i].selectedValue;
+            let currDataType = this.state.feedTypeDetails.colHeaderArr[i].selectedValue;
+            let changeDataType = this.state.feedTypeDetails.changedcolHeaderArr[i].selectedValue;
             let prKey = this.state.feedTypeDetails.changedcolHeaderArr[i].prKey;
-            getData.push({'currColHead':currColHead, 'changedColHead':changedColHead,'dataType':dataType, 'prKey':prKey})
+            getData.push({'currColHead':currColHead, 'changedColHead':changedColHead,'currDataType':currDataType, 'changedDataType':changeDataType, 'prKey':prKey})
             console.log(getData)
         }
         Object.assign(feedTypeData, {colData: getData})
-
-       console.log('feedTypeData',feedTypeData)
-
         this.setState({formDirty: true});
         if (this.formValid()) {
             alert("Feed type Saved Successfully");
             const request = axios.post("/api/saveNewFeedType",feedTypeData);
             request.then(res => {
-                console.log(res);
+                console.log('res ',res);
+            }).catch(err=> {
+                console.log('errorrrrrr')
 
-            })
+            });
         }
     }
 
@@ -128,10 +126,8 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
         console.log('reader',reader)
         reader.onload = function(e) {
             // Use reader.result
-            console.log(reader.result);
             self.setState(Object.assign(self.state, {readerResult: reader.result}));
             self.setState(Object.assign(self.state.feedTypeDetails, {fileUrl: files[0].name}));
-            console.log("gagan", self.state);
         }
         reader.readAsText(files[0]);
     }
@@ -150,7 +146,6 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
             for (let j=0; j<headers.length; j++) {
                 let chktype = +row1[j];
                 let dataType;
-                debugger;
                 if(isNaN(chktype)){
                     if(Date.parse(row1[j])){
                         dataType = 'date';
@@ -352,6 +347,9 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
                                         <Col sm={2}>
                                             <label className="fontweightClass">Current Header</label>
                                         </Col>
+                                        <Col sm={2}>
+                                            <label className="fontweightClass">Current Datatype</label>
+                                        </Col>
                                         <Col sm={3}>
                                             <label className="fontweightClass">Changed Header</label>
                                         </Col>
@@ -372,6 +370,17 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
                                                 <Col sm={2}>
                                                     <label className="fontweightClass">{item.value}</label>
                                                 </Col>
+
+                                                <Col sm={2}>
+                                                    <select disabled={true} onChange={this.handleChange} name={"headname_"+item.key} className="boxBorder selectStyle">
+                                                        {
+                                                            dataTypeOptions.map((type) =>
+                                                                <option value={type} selected={item.selectedValue === type ? true : false}>{type}</option>
+
+                                                            )}
+                                                    </select>
+
+                                                </Col>
                                                 <Col sm={3} key={item.key}>
                                                     <input className="boxBorder" name={"headname_"+item.key}
                                                            defaultValue={item.value}
@@ -382,10 +391,6 @@ this.savefeedTypeDetails = this.savefeedTypeDetails.bind(this);
                                                 </Col>
                                                 <Col sm={3}>
                                                     <select onChange={this.handleChange} name={"headname_"+item.key} className="boxBorder selectStyle">
-                                                        {/*<option>string</option>*/}
-                                                        {/*<option>integer</option>*/}
-                                                        {/*<option>float</option>*/}
-                                                        {/*<option>date</option>*/}
                                                         {
                                                             dataTypeOptions.map((type) =>
                                                                <option value={type} selected={item.selectedValue === type ? true : false}>{type}</option>
