@@ -58,10 +58,63 @@ module.exports = {
     return "Error while processing...quitting.";
    } else {
     console.log("Data inserted successfully", data);
+module.exports.creategluejobs (inputresp);
     return "Insertion successful";
    }
   });
  }
+,
+creategluejobs: function(inputresp) {
+ var fs = require("fs");
+ //var express = require('express');
+ //var app = express();
+ //var bodyParser = require('body-parser');
+ //app.use(bodyParser.json()); // support json encoded bodies
+ //app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
+ var AWS = require('aws-sdk');
+ AWS.config.update({region: 'us-east-1'});
+
+  console.log("\n *STARTING creategluejobs* \n");
+
+  // Define to JSON type
+  var jsonContent = JSON.parse(inputresp);
+
+console.log("data",jsonContent);
+var glue = new AWS.Glue();
+
+  //Put new record in the table
+	var params = {
+	  Command: { /* required */
+		Name: 'job' + jsonContent.feedId,
+		ScriptLocation: 'STRING_VALUE'
+	  },
+	  Name: 'job' + jsonContent.feedId, /* required */
+	  Role: 'glueRole', /* required */
+	  AllocatedCapacity: 0/*,
+	  Connections: {
+		Connections: [
+		  'STRING_VALUE',
+		  /* more items */
+		/*]
+	  },
+	  DefaultArguments: {
+		'<GenericString>': 'STRING_VALUE',
+		/* '<GenericString>': ... */
+	  /*},
+	  Description: 'STRING_VALUE',
+	  ExecutionProperty: {
+		MaxConcurrentRuns: 0
+	  },
+	  LogUri: 'STRING_VALUE',
+	  MaxRetries: 0*/
+	};
+	glue.createJob(params, function(err, data) {
+	  if (err) console.log(err, err.stack); // an error occurred
+	  else     console.log(data);           // successful response
+	});
+
+ }
+
 ,
  
  getFeedDts: function(inputFeedId, callback) {
